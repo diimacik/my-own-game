@@ -24,9 +24,9 @@ export class GoningRight extends State {
         this.game.player.maxFrameX = 5;
     }
     hendlerInpu(input) {
-        if (input.includes('ArrowLeft') || input.includes('swipe left')) {
+        if (input.includes('ArrowLeft')) {
             this.game.player.setStates(states.GOINGLEFT, 1);
-        } else if (input.includes('ArrowUp') || input.includes('swipe up')) {
+        } else if (input.includes('ArrowUp'))  {
             this.game.player.setStates(states.JUMPRIGHT, 1);
         }
     }
@@ -42,9 +42,9 @@ export class GoningLeft extends State {
         this.game.player.maxFrameX = 11;
     }
     hendlerInpu(input) {
-        if (input.includes('ArrowRight') || input.includes('swipe right')) {
+        if (input.includes('ArrowRight')) {
             this.game.player.setStates(states.GOINGRIGHT, 1);
-        } else if (input.includes('ArrowUp') || input.includes('swipe up')) {
+        } else if (input.includes('ArrowUp')) {
             this.game.player.setStates(states.JUMPLEFT, 1);
         }
     }
@@ -63,7 +63,7 @@ export class JumpRight extends State {
         this.game.player.maxFrameX = 16;
     }
     hendlerInpu(input) {
-        if (input.includes('ArrowLeft') || input.includes('swipe left')) {
+        if (input.includes('ArrowLeft')) {
             this.game.player.setStates(states.JUMPLEFT, 1);
         }
         if (this.game.player.vy > this.game.player.weight) {
@@ -85,7 +85,7 @@ export class JumpLeft extends State {
         this.game.player.maxFrameX = 25;
     }
     hendlerInpu(input) {
-        if (input.includes('ArrowRight') || input.includes('swipe right')) {
+        if (input.includes('ArrowRight')) {
             this.game.player.setStates(states.JUMPRIGHT, 1);
         }
         if (this.game.player.vy > this.game.player.weight) {
@@ -104,7 +104,7 @@ export class FallRight extends State {
         this.game.player.maxFrameX = 32;
     }
     hendlerInpu(input) {
-        if (input.includes('ArrowLeft') || input.includes('swipe left')) {
+        if (input.includes('ArrowLeft')) {
             this.game.player.setStates(states.FALLLEFT, 1);
         }
         if (this.game.player.onGround()) {
@@ -123,7 +123,7 @@ export class FallLeft extends State {
         this.game.player.maxFrameX = 39;
     }
     hendlerInpu(input) {
-        if (input.includes('ArrowRight') || input.includes('swipe right')) {
+        if (input.includes('ArrowRight')) {
             this.game.player.setStates(states.FALLRIGHT, 1);
         }
         if (this.game.player.onGround()) {

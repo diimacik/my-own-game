@@ -32,8 +32,8 @@ export class Player {
         this.curranetState.hendlerInpu(input);
         this.x += this.speed;
         // horizontall movment
-        if (input.includes('ArrowRight') || input.includes('swipe right')) this.speed = this.maxSpeed;
-        else if (input.includes('ArrowLeft') || input.includes('swipe left')) this.speed = -this.maxSpeed;
+        if (input.includes('ArrowRight')) this.speed = this.maxSpeed;
+        else if (input.includes('ArrowLeft')) this.speed = -this.maxSpeed;
         else this.speed = 0;
         // horizontall boundaries
         if (this.x < 0) this.x = 0;

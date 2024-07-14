@@ -4,12 +4,14 @@ import { InputHandler } from "./input.js";
 import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
 import { Cristal, Coins } from "./things.js";
+import { Joystick } from "./joystick.js";
 
 window.addEventListener('load', function() {
     const canvas = this.document.getElementById('canvas1');
     canvas.width = 800;
     canvas.height = 500;
     const ctx = canvas.getContext('2d');
+    const fullScreenButton =  this.document.getElementById('fullScreen')
 
     class Game {
         constructor(width, height) {
@@ -22,6 +24,7 @@ window.addEventListener('load', function() {
             this.player = new Player(this);
             this.input = new InputHandler(this);
             this.UI = new UI(this);
+            this.joystick = new Joystick(this, 80, 400, 75, 25);
             this.enemies = [];
             this.things = [];
             this.particles = [];
@@ -40,9 +43,10 @@ window.addEventListener('load', function() {
             this.energy = 0;
             this.bossPusher = false;
         }
-        update(deltaTime) {
+        update(deltaTime, context) {
             this.background.update(deltaTime);
             this.player.update(this.input.keys, deltaTime, this.enemies, this.things);
+            this.joystick.update(deltaTime, context);
             
             // handle enemies
             if (this.enemyTimer > this.enemyInterval) {
@@ -84,19 +88,22 @@ window.addEventListener('load', function() {
 
         }
         draw(context) {
+            
             this.background.draw(context);
             
             this.particles.forEach(particle => {
                 particle.draw(context);
             })
             this.player.draw(context);
+            
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             })
             this.UI.draw(context);
+            this.joystick.draw(context);
             this.things.forEach(thing => {
                 thing.draw(context);
-            })
+            });
             
         }
         addEnemy() {
@@ -125,6 +132,18 @@ window.addEventListener('load', function() {
             else this.things.push(new Cristal(this));
         }
     }
+
+    function toggleFullScreen(){
+        console.log(document.fullscreenElement);
+        if (!document.fullscreenElement) {
+            canvas.requestFullscreen().catch(err => {
+                alert(`Error, can't enable full-screen mode: ${err.message}`);
+            });
+        }else {
+            document.exitFullscreen();
+        }
+    }
+    fullScreenButton.addEventListener('click', toggleFullScreen)
 
     const game = new Game(canvas.width, canvas.height);
 
