@@ -24,7 +24,7 @@ window.addEventListener('load', function() {
             this.player = new Player(this);
             this.input = new InputHandler(this);
             this.UI = new UI(this);
-            this.joystick = new Joystick(this, 80, 300, 75, 25);
+            this.joystick = new Joystick(this, 80, this.height / 2 + 80 / 2, 75, 25);
             this.enemies = [];
             this.things = [];
             this.particles = [];
@@ -47,6 +47,7 @@ window.addEventListener('load', function() {
             this.background.update(deltaTime);
             this.player.update(this.input.keys, this.joystick.keys, deltaTime, this.enemies, this.things);
             this.joystick.update(deltaTime);
+            this.joystick.listener();
             
             // handle enemies
             if (this.enemyTimer > this.enemyInterval) {

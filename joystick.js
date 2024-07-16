@@ -2,7 +2,6 @@
 
 class Vector2 {
     constructor(x, y) {
-
         this.x = x;
         this.y = y;
     }
@@ -45,10 +44,10 @@ export class Joystick {
     }
     listener() {
         addEventListener('touchstart', e => {
-            this.touchPos = new Vector2(e.touches[0].pageX, e.touches[0].pageY);
-            //if (this.touchPos.sub(this.origin).mag() <= this.radius) 
-            this.ondrag = true;
+            this.touchPos = new Vector2(e.touches[0].pageX - 80, e.touches[0].pageY + 40);
+            if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
             
+            console.log(e.touches);
             
             //console.log(this.touchPos, e.touches[0].pageX, e.touches[0].pageY, this.ondrag);
         })
@@ -61,8 +60,9 @@ export class Joystick {
             this.keys.splice(this.keys.indexOf('swipe right'), 1);
         })
         addEventListener('touchmove', e => {
-            //if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
-            this.touchPos = new Vector2(e.touches[0].pageX, e.touches[0].pageY);
+            
+            this.touchPos = new Vector2(e.touches[0].pageX - 80, e.touches[0].pageY + 40);
+            if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
             /*
             this.keys.splice(this.keys.indexOf('swipe up'), 1);
             this.keys.splice(this.keys.indexOf('swipe down'), 1);
@@ -127,6 +127,7 @@ export class Joystick {
     update(deltaTime) {
         
         if (this.jostickTimer > this.jostickInterval) {
+            
             this.resposition();
             
             this.jostickTimer = 0;
