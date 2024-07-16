@@ -8,7 +8,7 @@ import { Joystick } from "./joystick.js";
 
 window.addEventListener('load', function() {
     const canvas = this.document.getElementById('canvas1');
-    canvas.width = 800;
+    canvas.width = 900;
     canvas.height = 500;
     const ctx = canvas.getContext('2d');
     const fullScreenButton =  this.document.getElementById('fullScreen')
@@ -24,7 +24,7 @@ window.addEventListener('load', function() {
             this.player = new Player(this);
             this.input = new InputHandler(this);
             this.UI = new UI(this);
-            this.joystick = new Joystick(80, 400, 75, 25);
+            this.joystick = new Joystick(this, 80, 300, 75, 25);
             this.enemies = [];
             this.things = [];
             this.particles = [];
@@ -43,10 +43,10 @@ window.addEventListener('load', function() {
             this.energy = 0;
             this.bossPusher = false;
         }
-        update(deltaTime, context) {
+        update(deltaTime) {
             this.background.update(deltaTime);
-            this.player.update(this.input.keys, deltaTime, this.enemies, this.things);
-            this.joystick.update(deltaTime, context);
+            this.player.update(this.input.keys, this.joystick.keys, deltaTime, this.enemies, this.things);
+            this.joystick.update(deltaTime);
             
             // handle enemies
             if (this.enemyTimer > this.enemyInterval) {

@@ -2,6 +2,7 @@
 
 class Vector2 {
     constructor(x, y) {
+
         this.x = x;
         this.y = y;
     }
@@ -27,8 +28,8 @@ class Vector2 {
 
 
 export class Joystick {
-    constructor(x, y, radius, handleRadius) {
-
+    constructor(game, x, y, radius, handleRadius) {
+        this.game = game;
         this.pos = new Vector2(x, y);
         this.origin = new Vector2(x, y);
         this.radius = radius;
@@ -37,7 +38,7 @@ export class Joystick {
         this.ondrag = false;
         this.keys = [];
         this.touchPos = new Vector2(0, 0);
-        this.fps = 120;
+        this.fps = 30;
         this.jostickTimer = 0;
         this.jostickInterval = 1000/this.fps;
         this.listener();
@@ -45,18 +46,30 @@ export class Joystick {
     listener() {
         addEventListener('touchstart', e => {
             this.touchPos = new Vector2(e.touches[0].pageX, e.touches[0].pageY);
-            if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
+            //if (this.touchPos.sub(this.origin).mag() <= this.radius) 
+            this.ondrag = true;
             
             
-            console.log(this.touchPos, e.touches[0].pageX, e.touches[0].pageY, this.ondrag);
+            //console.log(this.touchPos, e.touches[0].pageX, e.touches[0].pageY, this.ondrag);
         })
         addEventListener('touchend', () => {
             this.ondrag = false;
+            //this.touchPos = new Vector2(e.touches[0].pageX, e.touches[0].pageY);
+            this.keys.splice(this.keys.indexOf('swipe up'), 1);
+            this.keys.splice(this.keys.indexOf('swipe down'), 1);
+            this.keys.splice(this.keys.indexOf('swipe left'), 1);
+            this.keys.splice(this.keys.indexOf('swipe right'), 1);
         })
         addEventListener('touchmove', e => {
             //if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
             this.touchPos = new Vector2(e.touches[0].pageX, e.touches[0].pageY);
-            console.log(this.ondrag);
+            /*
+            this.keys.splice(this.keys.indexOf('swipe up'), 1);
+            this.keys.splice(this.keys.indexOf('swipe down'), 1);
+            this.keys.splice(this.keys.indexOf('swipe left'), 1);
+            this.keys.splice(this.keys.indexOf('swipe right'), 1);
+            */
+            //console.log(this.ondrag);
         })
     }
     resposition() {
@@ -70,22 +83,31 @@ export class Joystick {
             const directionX = diff.x
             const directionY = diff.y
             const distance = maxDist / 2;
-            console.log(maxDist, diff, directionX, directionY, distance);
+
+            //console.log(maxDist, diff, directionX, directionY, distance);
 
             if (directionY < -distance) {
-                console.log('up');
+                if (this.keys.indexOf('swipe up') === -1) {
+                    this.keys.push('swipe up');
+                }    
             }
             else if (directionY > distance) {
-                console.log('down');
+                if (this.keys.indexOf('swipe down') === -1) {
+                    this.keys.push('swipe down');    
+                }
             }
             else if (directionX > -distance) {
-                console.log('right');
+                if (this.keys.indexOf('swipe right') === -1) {
+                    this.keys.push('swipe right');    
+                }
             }
             else if (directionX < distance) {
-                console.log('left');
-            }
+                if (this.keys.indexOf('swipe left') === -1) {
+                    this.keys.push('swipe left');
+                }
+            }    
         }
-
+        //console.log(this.keys);
     }
 
     

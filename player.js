@@ -26,14 +26,14 @@ export class Player {
         this.damageTimer = 0;
         this.damage = false;
     }
-    update(input, deltaTime) {
+    update(input, joystick, deltaTime) {
         this.checkCollision(deltaTime);
         this.pickUp();
-        this.curranetState.hendlerInpu(input);
+        this.curranetState.hendlerInpu(input, joystick);
         this.x += this.speed;
         // horizontall movment
-        if (input.includes('ArrowRight')) this.speed = this.maxSpeed;
-        else if (input.includes('ArrowLeft')) this.speed = -this.maxSpeed;
+        if (input.includes('ArrowRight') || joystick.includes('swipe right')) this.speed = this.maxSpeed;
+        else if (input.includes('ArrowLeft') || joystick.includes('swipe left')) this.speed = -this.maxSpeed;
         else this.speed = 0;
         // horizontall boundaries
         if (this.x < 0) this.x = 0;

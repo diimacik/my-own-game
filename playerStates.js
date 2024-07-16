@@ -23,10 +23,10 @@ export class GoningRight extends State {
         this.game.player.frameX = 0;
         this.game.player.maxFrameX = 5;
     }
-    hendlerInpu(input) {
-        if (input.includes('ArrowLeft')) {
+    hendlerInpu(input, joystick) {
+        if (input.includes('ArrowLeft') || joystick.includes('swipe left')) {
             this.game.player.setStates(states.GOINGLEFT, 1);
-        } else if (input.includes('ArrowUp'))  {
+        } else if (input.includes('ArrowUp') || joystick.includes('swipe up'))  {
             this.game.player.setStates(states.JUMPRIGHT, 1);
         }
     }
@@ -41,10 +41,10 @@ export class GoningLeft extends State {
         this.game.player.frameX = 6;
         this.game.player.maxFrameX = 11;
     }
-    hendlerInpu(input) {
-        if (input.includes('ArrowRight')) {
+    hendlerInpu(input, joystick) {
+        if (input.includes('ArrowRight') || joystick.includes('swipe right')) {
             this.game.player.setStates(states.GOINGRIGHT, 1);
-        } else if (input.includes('ArrowUp')) {
+        } else if (input.includes('ArrowUp') || joystick.includes('swipe up')) {
             this.game.player.setStates(states.JUMPLEFT, 1);
         }
     }
@@ -62,8 +62,8 @@ export class JumpRight extends State {
         this.game.player.frameX = 12;
         this.game.player.maxFrameX = 16;
     }
-    hendlerInpu(input) {
-        if (input.includes('ArrowLeft')) {
+    hendlerInpu(input, joystick) {
+        if (input.includes('ArrowLeft') || joystick.includes('swipe left')) {
             this.game.player.setStates(states.JUMPLEFT, 1);
         }
         if (this.game.player.vy > this.game.player.weight) {
@@ -84,8 +84,8 @@ export class JumpLeft extends State {
         this.game.player.frameX = 19;
         this.game.player.maxFrameX = 25;
     }
-    hendlerInpu(input) {
-        if (input.includes('ArrowRight')) {
+    hendlerInpu(input, joystick) {
+        if (input.includes('ArrowRight') || joystick.includes('swipe right')) {
             this.game.player.setStates(states.JUMPRIGHT, 1);
         }
         if (this.game.player.vy > this.game.player.weight) {
@@ -103,8 +103,8 @@ export class FallRight extends State {
         this.game.player.frameX = 26;
         this.game.player.maxFrameX = 32;
     }
-    hendlerInpu(input) {
-        if (input.includes('ArrowLeft')) {
+    hendlerInpu(input, joystick) {
+        if (input.includes('ArrowLeft') || joystick.includes('swipe left')) {
             this.game.player.setStates(states.FALLLEFT, 1);
         }
         if (this.game.player.onGround()) {
@@ -122,8 +122,8 @@ export class FallLeft extends State {
         this.game.player.frameX = 33;
         this.game.player.maxFrameX = 39;
     }
-    hendlerInpu(input) {
-        if (input.includes('ArrowRight')) {
+    hendlerInpu(input, joystick) {
+        if (input.includes('ArrowRight') || joystick.includes('swipe right')) {
             this.game.player.setStates(states.FALLRIGHT, 1);
         }
         if (this.game.player.onGround()) {
