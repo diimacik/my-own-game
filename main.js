@@ -24,7 +24,7 @@ window.addEventListener('load', function() {
             this.player = new Player(this);
             this.input = new InputHandler(this);
             this.UI = new UI(this);
-            this.joystick = new Joystick(this, 80, 400, 75, 25);
+            this.joystick = new Joystick(80, 400, 75, 25);
             this.enemies = [];
             this.things = [];
             this.particles = [];

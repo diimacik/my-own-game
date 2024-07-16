@@ -20,7 +20,7 @@ img {
     font-size: 20px;
     padding: 10px;
     top: 10px;
-    left: 50%;
-    width: 100%;
-    transform: translateX(-50%);
+    left: 10px;
+    min-width: 100%;
+    /*transform: translateX(-50%);*/
 }

@@ -27,16 +27,15 @@ class Vector2 {
 
 
 export class Joystick {
-    constructor(game, x, y, radius, handleRadius) {
-        this.game = game;
-        this.x = game.x;
-        this.y = game.y;
+    constructor(x, y, radius, handleRadius) {
+
         this.pos = new Vector2(x, y);
         this.origin = new Vector2(x, y);
         this.radius = radius;
         this.handleRadius = handleRadius;
         this.handleFriction = 0.5;
         this.ondrag = false;
+        this.keys = [];
         this.touchPos = new Vector2(0, 0);
         this.fps = 120;
         this.jostickTimer = 0;
