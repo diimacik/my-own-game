@@ -131,6 +131,18 @@ window.addEventListener('load', function() {
         addThins() {
             if (Math.random() < 0.9) this.things.push(new Coins(this));
             else this.things.push(new Cristal(this));
+        } 
+        restartGame() {
+            //this.player.restart();
+            this.background.restart();
+            this.lives = 10;
+            this.energy = 0;
+            this.kills = 0;
+            this.coins = 0;
+            this.gameOver = false;
+            this.enemies = [];
+            animate(0);
+
         }
     }
 

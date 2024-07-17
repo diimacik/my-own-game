@@ -92,6 +92,12 @@ export class Player {
         this.game.speed = this.game.maxSpeed * speed;
         this.curranetState.enter();
     }
+    restart() {
+        this.x = 0;
+        this.y = this.gameHeght - this.height - this.game.ground;
+        this.maxFrameX = 5;
+        this.minFrameX = 0;
+    }
     checkCollision(deltaTime) {
         // collision enemies
         this.game.enemies.forEach(enemy => {

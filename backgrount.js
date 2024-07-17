@@ -47,6 +47,9 @@ export class Backgound {
 
         
     }
+    restart() {
+        this.x = 0;
+    }
     draw(context) {
         this.backgroundLayers.forEach(layer => {
             layer.draw(context);
