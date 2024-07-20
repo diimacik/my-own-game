@@ -47,7 +47,7 @@ export class Joystick {
             this.touchPos = new Vector2(e.touches[0].pageX - 80, e.touches[0].pageY + 40);
             if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
             
-            console.log(e.touches);
+            //console.log(e.touches);
             
             //console.log(this.touchPos, e.touches[0].pageX, e.touches[0].pageY, this.ondrag);
         })

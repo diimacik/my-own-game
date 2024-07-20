@@ -5,6 +5,7 @@ import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
 import { Cristal, Coins } from "./things.js";
 import { Joystick } from "./joystick.js";
+import { btnPause } from "./buttons.js";
 
 window.addEventListener('load', function() {
     const canvas = this.document.getElementById('canvas1');
@@ -25,6 +26,7 @@ window.addEventListener('load', function() {
             this.input = new InputHandler(this);
             this.UI = new UI(this);
             this.joystick = new Joystick(this, 80, this.height / 2 + 80 / 2, 75, 25);
+            this.btnPause = new btnPause(this, this.width - 50, 50)
             this.enemies = [];
             this.things = [];
             this.particles = [];
@@ -37,6 +39,7 @@ window.addEventListener('load', function() {
             this.player.curranetState.enter();
             this.debug = false;
             this.gameOver = false;
+            this.gamePuase = false;
             this.lives = 10;
             this.coins = 0;
             this.kills = 0;
@@ -50,7 +53,7 @@ window.addEventListener('load', function() {
             this.joystick.listener();
             
             // handle enemies
-            if (this.enemyTimer > this.enemyInterval) {
+            if (this.enemyTimer > this.enemyInterval && !this.gamePuase) {
                 this.addEnemy();
                 this.enemyTimer = 0;
             } else {
@@ -66,7 +69,7 @@ window.addEventListener('load', function() {
                 }
             })
             // handle things
-            if (this.thingsTimer> this.thingsInterval) {
+            if (this.thingsTimer> this.thingsInterval && !this.gamePuase) {
                 this.addThins();
                 this.thingsTimer = 0;
             } else {
@@ -101,6 +104,7 @@ window.addEventListener('load', function() {
                 enemy.draw(context);
             })
             this.UI.draw(context);
+            this.btnPause.draw(context);
             this.joystick.draw(context);
             this.things.forEach(thing => {
                 thing.draw(context);
@@ -144,6 +148,14 @@ window.addEventListener('load', function() {
             animate(0);
 
         }
+        setPause() {
+            if (!this.gamePuase) {
+                this.gamePuase = true;
+            } else {
+                this.gamePuase = false;
+                animate(0);
+            }
+        }
     }
 
     function toggleFullScreen(){
@@ -169,7 +181,8 @@ window.addEventListener('load', function() {
         game.update(deltaTime);
         game.draw(ctx);
         
-        if (!game.gameOver) requestAnimationFrame(animate);
+        if (!game.gameOver && !game.gamePuase) requestAnimationFrame(animate);
+
     }
     animate(0);
 
