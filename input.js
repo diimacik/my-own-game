@@ -61,15 +61,15 @@ export class InputHandler {
             this.keys.splice(this.keys.indexOf('swipe down'));
         });
         window.addEventListener('mousedown', e => {
-            //console.log(e.pageX, e.pageY);
-            
-            this.touchY = e.pageY;
-            this.touchX = e.pageX;
+            console.log(e);
+            this.game.userDev.detector();
+            this.touchY = e.offsetY;
+            this.touchX = e.offsetX;
             // pause touch in button
             
             
-            const btnX = this.game.btnPause.x + 300;
-            const btnY = this.game.btnPause.y - 20;
+            const btnX = this.game.btnPause.x -30;
+            const btnY = this.game.btnPause.y - 30;
             const radius = this.game.btnPause.radius;
             console.log(this.touchX, this.touchY);
             console.log(btnX, btnY);

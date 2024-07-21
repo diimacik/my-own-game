@@ -6,6 +6,7 @@ import { UI } from "./UI.js"
 import { Cristal, Coins } from "./things.js";
 import { Joystick } from "./joystick.js";
 import { btnPause } from "./buttons.js";
+import { UserDevice } from "./detector.js";
 
 window.addEventListener('load', function() {
     const canvas = this.document.getElementById('canvas1');
@@ -45,6 +46,7 @@ window.addEventListener('load', function() {
             this.kills = 0;
             this.energy = 0;
             this.bossPusher = false;
+            this.userDev = new UserDevice(this);
         }
         update(deltaTime) {
             this.background.update(deltaTime);
@@ -156,8 +158,9 @@ window.addEventListener('load', function() {
                 animate(0);
             }
         }
-    }
 
+    }
+    
     function toggleFullScreen(){
         console.log(document.fullscreenElement);
         if (!document.fullscreenElement) {
@@ -172,6 +175,12 @@ window.addEventListener('load', function() {
 
     const game = new Game(canvas.width, canvas.height);
 
+    /*canvas.addEventListener('mousedown', e => {
+        console.log(e);
+        console.log(e.offsetX, e.offsetY);
+        console.log(game.btnPause.x, game.btnPause.y);
+        console.log(game.width, game.height);
+    });*/
     let lastTime = 0;
 
     function animate(timeStapm) {
