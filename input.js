@@ -27,20 +27,17 @@ export class InputHandler {
                     e.key === 'ArrowRight') {
                 this.keys.splice(this.keys.indexOf(e.key), 1);
             }
-
         });
 
         // touch listener for restart game :)
         window.addEventListener('touchstart', e => {
-            this.touchY = e.changedTouches[0].pageY;
-            this.touchX = e.changedTouches[0].pageX;
+            this.touchX = e.changedTouches[0].pageX / this.game.userDev.indexX + this.game.btnPause.radius;
+            this.touchY = e.changedTouches[0].pageY / this.game.userDev.indexY + this.game.btnPause.radius;
             // pause touch in button
-            console.log(this.touchX, this.touchY);
             
-            const btnX = this.game.btnPause.x - 100;
-            const btnY = this.game.btnPause.y - 35;
+            const btnX = this.game.btnPause.x;
+            const btnY = this.game.btnPause.y;
             const radius = this.game.btnPause.radius;
-            console.log(btnX, btnY);
             if (this.touchX >= btnX &&
                 this.touchX <= btnX + radius * 2 && 
                 this.touchY >= btnY &&
@@ -61,24 +58,26 @@ export class InputHandler {
             this.keys.splice(this.keys.indexOf('swipe down'));
         });
         window.addEventListener('mousedown', e => {
-            console.log(e);
             this.game.userDev.detector();
             this.touchY = e.offsetY;
             this.touchX = e.offsetX;
+            if (document.fullscreenElement) {
+                this.touchX = e.pageX / this.game.userDev.indexX;
+                this.touchY = e.pageY / this.game.userDev.indexY;
+
+            };
             // pause touch in button
             
-            
-            const btnX = this.game.btnPause.x -30;
+            const btnX = this.game.btnPause.x - 30;
             const btnY = this.game.btnPause.y - 30;
             const radius = this.game.btnPause.radius;
-            console.log(this.touchX, this.touchY);
             console.log(btnX, btnY);
+            console.log(this.touchX, this.touchY);
             if (this.touchX >= btnX &&
                 this.touchX <= btnX + radius * 2 && 
                 this.touchY >= btnY &&
                 this.touchY <= btnY + radius * 2
             )  {
-                console.log('pause');
                 this.game.setPause();
             }
                 

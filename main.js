@@ -7,6 +7,7 @@ import { Cristal, Coins } from "./things.js";
 import { Joystick } from "./joystick.js";
 import { btnPause } from "./buttons.js";
 import { UserDevice } from "./detector.js";
+import { Menu1 } from "./menu.js";
 
 window.addEventListener('load', function() {
     const canvas = this.document.getElementById('canvas1');
@@ -26,8 +27,8 @@ window.addEventListener('load', function() {
             this.player = new Player(this);
             this.input = new InputHandler(this);
             this.UI = new UI(this);
-            this.joystick = new Joystick(this, 80, this.height / 2 + 80 / 2, 75, 25);
-            this.btnPause = new btnPause(this, this.width - 50, 50)
+            this.joystick = new Joystick(this, this.width * 0.16, this.height * 0.6, 75, 25);
+            this.btnPause = new btnPause(this, this.width * 0.9, this.height * 0.1)
             this.enemies = [];
             this.things = [];
             this.particles = [];
@@ -40,19 +41,24 @@ window.addEventListener('load', function() {
             this.player.curranetState.enter();
             this.debug = false;
             this.gameOver = false;
-            this.gamePuase = false;
+            this.gamePuase = true;
+            this.menu1 = new Menu1(this);
             this.lives = 10;
             this.coins = 0;
             this.kills = 0;
             this.energy = 0;
             this.bossPusher = false;
+            
             this.userDev = new UserDevice(this);
+            this.userDev.detector();
+            //this.joystick.listener();
         }
         update(deltaTime) {
             this.background.update(deltaTime);
             this.player.update(this.input.keys, this.joystick.keys, deltaTime, this.enemies, this.things);
             this.joystick.update(deltaTime);
             this.joystick.listener();
+            //this.userDev.detector();
             
             // handle enemies
             if (this.enemyTimer > this.enemyInterval && !this.gamePuase) {
@@ -106,11 +112,20 @@ window.addEventListener('load', function() {
                 enemy.draw(context);
             })
             this.UI.draw(context);
-            this.btnPause.draw(context);
-            this.joystick.draw(context);
+            
+            if (!this.userDev.leptop || this.debug) {
+                this.joystick.draw(context);
+            } //else {
+            //    this.joystick.draw(context);
+            //}
+            
+
             this.things.forEach(thing => {
                 thing.draw(context);
             });
+
+            if (this.gamePuase) this.menu1.draw(context);
+            this.btnPause.draw(context);
             
         }
         addEnemy() {
@@ -161,28 +176,23 @@ window.addEventListener('load', function() {
 
     }
     
+    
+
+    const game = new Game(canvas.width, canvas.height);
+    let lastTime = 0;
     function toggleFullScreen(){
-        console.log(document.fullscreenElement);
         if (!document.fullscreenElement) {
             canvas.requestFullscreen().catch(err => {
                 alert(`Error, can't enable full-screen mode: ${err.message}`);
             });
         }else {
             document.exitFullscreen();
+            
         }
+        
     }
     fullScreenButton.addEventListener('click', toggleFullScreen)
-
-    const game = new Game(canvas.width, canvas.height);
-
-    /*canvas.addEventListener('mousedown', e => {
-        console.log(e);
-        console.log(e.offsetX, e.offsetY);
-        console.log(game.btnPause.x, game.btnPause.y);
-        console.log(game.width, game.height);
-    });*/
-    let lastTime = 0;
-
+    console.log(game.userDev.screenWidth, game.userDev.screenHeight, game.userDev.indexX, game.userDev.indexY);
     function animate(timeStapm) {
         const deltaTime = timeStapm - lastTime;
         lastTime = timeStapm;

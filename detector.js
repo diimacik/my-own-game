@@ -1,20 +1,4 @@
-/*export function userDevice() {
-    const UserAgent = navigator.userAgent;
-    const device = {
-        iPad: /iPad/.test(UserAgent),
-        iPhone: /iPhone/.test(UserAgent),
-        Android: /Android/.test(UserAgent),
-        windows: /Windows/.test(UserAgent),
-    }
-    let dev = device[0];
-    console.log(device);
-    for (dev in device) {
-        if (device[dev]) {
-            console.log('You are useing ' + dev);
-        }
-    }
-}
-    */
+
 export class UserDevice {
     constructor(game) {
         this.game = game;
@@ -26,13 +10,15 @@ export class UserDevice {
             windows: /Windows/.test(this.UserAgent),
         }
         this.dev = this.device[0];
+        this.leptop = false;
+        this.screenWidth = screen.width;
+        this.screenHeight = screen.height;
+        this.indexX = this.screenWidth / this.game.width;
+        this.indexY = this.screenHeight / this.game.height;
     }
     detector() {
-        
-        for (this.dev in this.device) {
-            if (this.device[this.dev]) {
-                console.log(this.dev);
-            }
+        if (this.device.windows) {
+            this.leptop = true;
         }
     }
 }

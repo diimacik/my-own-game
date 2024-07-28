@@ -44,16 +44,11 @@ export class Joystick {
     }
     listener() {
         addEventListener('touchstart', e => {
-            this.touchPos = new Vector2(e.touches[0].pageX - 80, e.touches[0].pageY + 40);
+            this.touchPos = new Vector2(e.touches[0].pageX / this.game.userDev.indexX, e.touches[0].pageY / this.game.userDev.indexY);
             if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
-            
-            //console.log(e.touches);
-            
-            //console.log(this.touchPos, e.touches[0].pageX, e.touches[0].pageY, this.ondrag);
         })
         addEventListener('touchend', () => {
             this.ondrag = false;
-            //this.touchPos = new Vector2(e.touches[0].pageX, e.touches[0].pageY);
             this.keys.splice(this.keys.indexOf('swipe up'), 1);
             this.keys.splice(this.keys.indexOf('swipe down'), 1);
             this.keys.splice(this.keys.indexOf('swipe left'), 1);
@@ -61,15 +56,9 @@ export class Joystick {
         })
         addEventListener('touchmove', e => {
             
-            this.touchPos = new Vector2(e.touches[0].pageX - 80, e.touches[0].pageY + 40);
+            this.touchPos = new Vector2(e.touches[0].pageX / this.game.userDev.indexX, e.touches[0].pageY/ this.game.userDev.indexY);
+            
             if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
-            /*
-            this.keys.splice(this.keys.indexOf('swipe up'), 1);
-            this.keys.splice(this.keys.indexOf('swipe down'), 1);
-            this.keys.splice(this.keys.indexOf('swipe left'), 1);
-            this.keys.splice(this.keys.indexOf('swipe right'), 1);
-            */
-            //console.log(this.ondrag);
         })
     }
     resposition() {
@@ -83,8 +72,6 @@ export class Joystick {
             const directionX = diff.x
             const directionY = diff.y
             const distance = maxDist / 2;
-
-            //console.log(maxDist, diff, directionX, directionY, distance);
 
             if (directionY < -distance) {
                 if (this.keys.indexOf('swipe up') === -1) {
@@ -107,7 +94,6 @@ export class Joystick {
                 }
             }    
         }
-        //console.log(this.keys);
     }
 
     

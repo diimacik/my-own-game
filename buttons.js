@@ -18,5 +18,12 @@ export class btnPause {
             context.closePath();
         }
         circle(this.x, this.y, this.radius, '#3d3d3d');
+        context.save();
+        
+        context.fillStyle = 'white';
+        context.font = 40 + 'px ' + 'Pixelify Sans';
+        context.fillText('| |', this.x - 11, this.y + 10);
+        
+        context.restore();
     }
 }
