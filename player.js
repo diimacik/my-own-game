@@ -6,7 +6,18 @@ export class Player {
         this.game = game;
         this.width = 128;
         this.height = 128;
-        this.image = document.getElementById('player');
+        this.playerImg0 = document.getElementById('player');
+        this.playerImg1 = document.getElementById('player1');
+        this.playerImg2 = document.getElementById('player2');
+        this.playerImg3 = document.getElementById('player3');
+        this.image = [
+            this.playerImg0,
+            this.playerImg1,
+            this.playerImg2,
+            this.playerImg3,
+        ];
+        this.imageInd = 0;
+        this.imagesMax = 3;
         this.x = 0;
         this.y = this.game.height - this.height - this.game.ground;
         this.minFrameX = 0;
@@ -25,8 +36,9 @@ export class Player {
         this.damageInterval = 150;
         this.damageTimer = 0;
         this.damage = false;
+        //this.image[0];
     }
-    update(input, joystick, deltaTime) {
+    update(input, joystick,  deltaTime) {
         this.checkCollision(deltaTime);
         this.pickUp();
         this.curranetState.hendlerInpu(input, joystick);
@@ -67,7 +79,10 @@ export class Player {
             }
         }
         
+        
     }
+    
+    
     draw(context) {
         if (this.game.debug) {
         context.beginPath();
@@ -81,9 +96,19 @@ export class Player {
         context.arc(this.x + this.width / 3 + 20, this.y + this.height / 3 + 20, this.width / 3, 0, Math.PI * 2);
         context.stroke();
         }
-        context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+        
+
+        
+        context.drawImage(this.image[this.imageInd], this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
 
     }
+    changeInd() {
+        if (this.imageInd >= this.imagesMax) {
+            this.imageInd = 0;
+        }else this.imageInd++;
+    }
+
+        
     onGround() {
         return this.y >= this.game.height - this.height - this.game.ground;
     }

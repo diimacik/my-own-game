@@ -8,7 +8,7 @@ class Things {
         this.markedForDeletion = false;
     }
     update(deltaTime) {
-        this.x -= this.speedX + this.game.speed;
+        this.x -= this.speedX + this.game.maxSpeed;
         this.y += this.speedY;
         if (this.frameTimer > this.frameInterval) {
             
@@ -51,7 +51,7 @@ export class Cristal extends Things {
         this.image = document.getElementById('cristal');
 
         
-        this.speedX = 0;
+        this.speedX = -5.4;
         this.speedY = 0;
         this.maxFrame = 5;
     }
@@ -75,7 +75,7 @@ export class Coins extends Things {
         this.image = document.getElementById('coins');
 
         
-        this.speedX = 0;
+        this.speedX = -5.4;
         this.speedY = 0;
         this.maxFrame = 3;
     }

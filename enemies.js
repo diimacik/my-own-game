@@ -8,7 +8,7 @@ class Enemy {
         this.markedForDeletion = false;
     }
     update(deltaTime) {
-        this.x -= this.speedX + this.game.speed;
+        this.x -= this.speedX + this.game.maxSpeed;
         this.y += this.speedY;
         if (this.frameTimer > this.frameInterval) {
             
@@ -50,7 +50,7 @@ export class GroundEnemy extends Enemy{
         this.y = this.game.height - this.game.ground - this.height;
         this.image = document.getElementById('ice-enemy');
         this.lives = 1;
-        this.speedX = 2;
+        this.speedX = 0;
         this.speedY = 0;
         this.minFrame = 0;
         this.maxFrame = 4;
@@ -68,7 +68,7 @@ export class IceBoss extends Enemy {
         this.image = document.getElementById('iceBoss');
         this.imageHeart = document.getElementById('enemy-heart')
         this.lives = 10;
-        this.speedX = 2;
+        this.speedX = -4;
         this.speedY = 0;
         this.minFrame = 0;
         this.maxFrame = 4;
@@ -78,12 +78,12 @@ export class IceBoss extends Enemy {
         if (this.x < 0 ) {
             this.minFrame = 5;
             this.maxFrame = 9;
-            this.speedX = -6;
+            this.speedX = -14;
             
         } else if (this.x > this.game.width - this.width) {
             this.minFrame = 0;
             this.maxFrame = 4;
-            this.speedX = 2;
+            this.speedX = -4;
                 
         }
     }
@@ -108,7 +108,7 @@ export class CoinBoss extends Enemy {
         this.image = document.getElementById('coinBoss');
         this.imageHeart = document.getElementById('enemy-heart')
         this.lives = 10;
-        this.speedX = 2;
+        this.speedX = -6;
         this.speedY = 0;
         this.minFrame = 0;
         this.maxFrame = 5;
@@ -120,10 +120,10 @@ export class CoinBoss extends Enemy {
         this.angle += this.va;
         this.y += Math.sin(this.angle);
         if (this.x < 0 ) {
-            this.speedX = -6;
+            this.speedX = -14;
             
         } else if (this.x > this.game.width - this.width) {
-            this.speedX = 2;
+            this.speedX = -6;
                 
         }
     }
@@ -147,7 +147,7 @@ export class Bird extends Enemy{
         this.y = this.game.height / 2 - this.height;
         this.image = document.getElementById('bird');
         this.lives = 1;
-        this.speedX = 2;
+        this.speedX = 0;
         this.speedY = 0;
         this.minFrame = 0;
         this.maxFrame = 3;
@@ -171,7 +171,7 @@ export class IceLance extends Enemy {
         this.y = 0;
         this.image = document.getElementById('ice-lance');
         this.lives = 1;
-        this.speedX = 0;
+        this.speedX = -5.4;
         this.speedY = Math.random() * 6 + 4;
         this.minFrame = 0;
         this.maxFrame = 0;

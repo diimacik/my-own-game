@@ -15,6 +15,9 @@ export class InputHandler {
                 ) && this.keys.indexOf(e.key) === -1) {
                 this.keys.push(e.key);
             }else if (e.key === 'd') this.game.debug = !this.game.debug;
+            else if (e.key === 'i') {
+                this.game.player.changeInd();
+            }
             else if (e.key === 'p') this.game.setPause();
             else if (e.key === 'Enter' && this.game.gameOver) {
                 this.game.restartGame();
@@ -79,6 +82,8 @@ export class InputHandler {
                 this.touchY <= btnY + radius * 2
             )  {
                 this.game.setPause();
+                this.game.speed = 0;
+                this.game.maxSpeed = 10;
             }
                 
         });

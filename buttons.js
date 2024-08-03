@@ -4,7 +4,7 @@ export class btnPause {
         this.x = x;
         this.y = y;
         this.radius = 30;
-        this.color = color
+        this.color = color;
     }
 
 

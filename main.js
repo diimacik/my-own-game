@@ -22,7 +22,7 @@ window.addEventListener('load', function() {
             this.height = height;
             this.ground = 55;
             this.speed = 0;
-            this.maxSpeed = 4;
+            this.maxSpeed = 10;
             this.background = new Backgound(this);
             this.player = new Player(this);
             this.input = new InputHandler(this);
@@ -54,52 +54,63 @@ window.addEventListener('load', function() {
             //this.joystick.listener();
         }
         update(deltaTime) {
-            this.background.update(deltaTime);
-            this.player.update(this.input.keys, this.joystick.keys, deltaTime, this.enemies, this.things);
-            this.joystick.update(deltaTime);
-            this.joystick.listener();
+            if (!this.gamePuase) {
+                
+                this.background.update(deltaTime);
+                this.player.update(this.input.keys, this.joystick.keys, deltaTime, this.enemies, this.things);
+                this.joystick.update(deltaTime);
+                this.joystick.listener();
+                // handle enemies
+                if (this.enemyTimer > this.enemyInterval && !this.gamePuase) {
+                    this.addEnemy();
+                    this.enemyTimer = 0;
+                } else {
+                    this.enemyTimer += deltaTime;
+                }
+                this.enemies.forEach(enemy => {
+                    enemy.update(deltaTime);
+                    if (!this.bossPusher) {
+
+                    }
+                    if (enemy.markedForDeletion) {
+                        this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                    }
+                })
+                // handle things
+                if (this.thingsTimer> this.thingsInterval && !this.gamePuase) {
+                    this.addThins();
+                    this.thingsTimer = 0;
+                } else {
+                    this.thingsTimer += deltaTime;
+                }
+                this.things.forEach(thing => {
+                    thing.update(deltaTime);
+                    if (thing.markedForDeletion) this.things.splice(this.things.indexOf(thing), 1);
+                });
+                // handle particles
+                this.particles.forEach(particle => {
+                    particle.update();
+                });
+                if (this.particles.length > this.maxParticles) {
+                    this.particles.length = this.maxParticles;
+                }
+                this.particles = this.particles.filter(particle => !particle.markedForDeletion);
+                this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
+                this.things = this.things.filter(thing => !thing.markedForDeletion);
+            } else {
+                this.menu1.update(this.player, deltaTime);
+            }
+            
+            
             //this.userDev.detector();
             
-            // handle enemies
-            if (this.enemyTimer > this.enemyInterval && !this.gamePuase) {
-                this.addEnemy();
-                this.enemyTimer = 0;
-            } else {
-                this.enemyTimer += deltaTime;
-            }
-            this.enemies.forEach(enemy => {
-                enemy.update(deltaTime);
-                if (!this.bossPusher) {
+            
+            
 
-                }
-                if (enemy.markedForDeletion) {
-                    this.enemies.splice(this.enemies.indexOf(enemy), 1);
-                }
-            })
-            // handle things
-            if (this.thingsTimer> this.thingsInterval && !this.gamePuase) {
-                this.addThins();
-                this.thingsTimer = 0;
-            } else {
-                this.thingsTimer += deltaTime;
-            }
-            this.things.forEach(thing => {
-                thing.update(deltaTime);
-                if (thing.markedForDeletion) this.things.splice(this.things.indexOf(thing), 1);
-            });
-            // handle particles
-            this.particles.forEach(particle => {
-                particle.update();
-            });
-            if (this.particles.length > this.maxParticles) {
-                this.particles.length = this.maxParticles;
-            }
-            this.particles = this.particles.filter(particle => !particle.markedForDeletion);
-            this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
-            this.things = this.things.filter(thing => !thing.markedForDeletion);
 
         }
         draw(context) {
+            
             
             this.background.draw(context);
             
@@ -107,7 +118,9 @@ window.addEventListener('load', function() {
                 particle.draw(context);
             })
             this.player.draw(context);
-            
+            this.things.forEach(thing => {
+                thing.draw(context);
+            })
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             })
@@ -124,12 +137,16 @@ window.addEventListener('load', function() {
                 thing.draw(context);
             });
 
-            if (this.gamePuase) this.menu1.draw(context);
-            this.btnPause.draw(context);
             
+            //this.menu1.stack.updateDraw(context);
+            this.btnPause.draw(context);
+            if (this.gamePuase) {
+                this.menu1.draw(context);
+            }
+
         }
         addEnemy() {
-            if (this.kills >= 50 && Number.isInteger(this.kills / 50) && this.bossPusher) {    
+            if (this.kills >= 10 && Number.isInteger(this.kills / 10) && this.bossPusher) {    
                 this.enemies.push(new IceBoss(this));
                 this.bossPusher = false;
                 
@@ -165,12 +182,19 @@ window.addEventListener('load', function() {
             animate(0);
 
         }
+        
         setPause() {
             if (!this.gamePuase) {
                 this.gamePuase = true;
+                
+                //this.background.restart();
             } else {
                 this.gamePuase = false;
-                animate(0);
+                this.speed = 0;
+                this.maxSpeed = 10;
+                
+                //animate(0);
+                //this.player.update();
             }
         }
 
@@ -200,7 +224,9 @@ window.addEventListener('load', function() {
         game.update(deltaTime);
         game.draw(ctx);
         
-        if (!game.gameOver && !game.gamePuase) requestAnimationFrame(animate);
+        if (!game.gameOver) requestAnimationFrame(animate);
+        
+
 
     }
     animate(0);
