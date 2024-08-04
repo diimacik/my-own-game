@@ -97,8 +97,9 @@ window.addEventListener('load', function() {
                 this.particles = this.particles.filter(particle => !particle.markedForDeletion);
                 this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
                 this.things = this.things.filter(thing => !thing.markedForDeletion);
-            } else {
-                this.menu1.update(this.player, deltaTime);
+            }
+            else if (this.gamePuase) {
+                this.menu1.update(this.player, deltaTime, this.userDev.indexX, this.userDev.indexY);
             }
             
             
@@ -146,7 +147,7 @@ window.addEventListener('load', function() {
 
         }
         addEnemy() {
-            if (this.kills >= 10 && Number.isInteger(this.kills / 10) && this.bossPusher) {    
+            if (this.kills >= 50 && Number.isInteger(this.kills / 50) && this.bossPusher) {    
                 this.enemies.push(new IceBoss(this));
                 this.bossPusher = false;
                 
@@ -186,10 +187,11 @@ window.addEventListener('load', function() {
         setPause() {
             if (!this.gamePuase) {
                 this.gamePuase = true;
-                
+                this.menu1.stack.menuResponse = true;
                 //this.background.restart();
             } else {
                 this.gamePuase = false;
+                this.menu1.stack.menuResponse = false;
                 this.speed = 0;
                 this.maxSpeed = 10;
                 

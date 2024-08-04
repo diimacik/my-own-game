@@ -11,8 +11,10 @@ export class Menu1 {
         this.text = 'skin of player';
         this.stack = new Stack(this, 20, 50, this.width - 40, this.height * 0.4);
     }
-    update(player, deltaTime) {
-        this.stack.lisener(player);
+    update(player, deltaTime, indexX, indexY) {
+        this.stack.lisener(player, indexX, indexY);
+        
+        
         //this.stack.update(deltaTime, player);
         //this.stack.updateDraw(context);
 
@@ -59,51 +61,19 @@ class Stack {
         this.imgSize = 128;
         
         //this.updateDraw(context);
-        this.touchY = '';
-        this.touchX = '';
+        this.keyId = [];
+        this.touchMenuY = '';
+        this.touchMenuX = '';
+        this.menuResponse = true;
         
-        this.fps = 10;
-        this.stackInterval = 1000/this.fps;
-        this.stackTimer = 0;
+        //this.fps = 10;
+        //this.stackInterval = 1000/this.fps;
+        //this.stackTimer = 0;
+        //this.lisener(player);
         this.skinID = 0;
-        this.lisener(player);
+        
     }
     
-    lisener(player) {
-        window.addEventListener('mousedown', e => {
-            this.touchX = e.offsetX;
-            this.touchY = e.offsetY;
-            if (this.touchX <= this.devWidth) {
-                this.skinID = 0;
-                player.imageInd = this.skinID;
-            }
-            else if (this.touchX <= this.devWidth * 2) {
-                this.skinID = 1;
-                player.imageInd = this.skinID;    
-            }
-            else if (this.touchX <= this.devWidth * 3) {
-                this.skinID = 2;
-                player.imageInd = this.skinID;
-            }
-            else if (this.touchX <= this.devWidth * 4) {
-                this.skinID = 3;
-                player.imageInd = this.skinID;
-            }
-        });
-    }
-    /*
-    update(deltaTime, player) {
-        if (this.stackTimer > this.stackInterval) {
-            this.lisener(player);
-            this.skinID;
-            console.log(this.skinID);
-            this.stackTimer = 0;
-        } else {
-            this.stackTimer += deltaTime;
-        }
-    }
-        */
-        
     draw(context) {
         for(let i = 0;i < this.countity; i++) {
             
@@ -130,6 +100,104 @@ class Stack {
         context.stroke(); 
         
     }
+    lisener(player, indexX, indexY) {
+        window.addEventListener('mousedown', e => {
+            
+            if (document.fullscreenElement) {
+                this.touchMenuX = e.pageX / indexX;
+                this.touchMenuY = e.pageY / indexY;
+
+            }else {
+                this.touchMenuX = e.offsetX;
+                this.touchMenuY = e.offsetY;
+            }
+
+            if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
+                this.touchMenuX <= this.devWidth &&
+                this.menuResponse
+            ) {
+                this.skinID = 0;
+                player.imageInd = this.skinID;
+                console.log('bumm');
+            }
+            else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
+                this.touchMenuX <= this.devWidth * 2 &&
+                this.menuResponse
+            ) {
+                this.skinID = 1;
+                player.imageInd = this.skinID;    
+            }
+            else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
+                this.touchMenuX <= this.devWidth * 3 &&
+                this.menuResponse
+            ) {
+                this.skinID = 2;
+                player.imageInd = this.skinID;
+            }
+            else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height &&
+                this.touchMenuX <= this.devWidth * 4 && 
+                this.menuResponse
+            ) {
+                this.skinID = 3;
+                player.imageInd = this.skinID;
+            }
+            console.log(this.touchMenuX, this.touchMenuY, this.y, this.height)
+        });
+
+        window.addEventListener('touchstart', e => {
+            this.touchMenuX = e.changedTouches[0].pageX / indexX;
+            this.touchMenuY = e.changedTouches[0].pageY / indexY;
+
+            if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
+                this.touchMenuX <= this.devWidth &&
+                this.menuResponse
+            ) {
+                this.skinID = 0;
+                player.imageInd = this.skinID;
+                
+                console.log('bumm');
+            }
+            else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
+                this.touchMenuX <= this.devWidth * 2 &&
+                this.menuResponse
+            ) {
+                this.skinID = 1;
+                player.imageInd = this.skinID;    
+            }
+            else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
+                this.touchMenuX <= this.devWidth * 3 &&
+                this.menuResponse
+            ) {
+                this.skinID = 2;
+                player.imageInd = this.skinID;
+            }
+            else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height &&
+                this.touchMenuX <= this.devWidth * 4 && 
+                this.menuResponse
+            ) {
+                this.skinID = 3;
+                player.imageInd = this.skinID;
+            }
+            this.touches = true;
+            //console.log(this.touchMenuX, this.touchMenuY, this.height, this.y, this.touches);
+        
+        });
+        
+    }
+    /*
+    update(deltaTime, player) {
+        if (this.stackTimer > this.stackInterval) {
+            this.lisener(player);
+            this.skinID;
+            console.log(this.skinID);
+            this.stackTimer = 0;
+        } else {
+            this.stackTimer += deltaTime;
+        }
+    }
+        */
+        
+    
     
     
 
