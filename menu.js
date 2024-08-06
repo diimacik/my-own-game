@@ -9,16 +9,17 @@ export class Menu1 {
         this.height = this.game.height;
         this.color = 'rgba(66, 110, 182, 0.8)';
         this.text = 'skin of player';
-        this.stack = new Stack(this, 20, 50, this.width - 40, this.height * 0.4);
+        //this.stack = new Stack(this, 20, 50, this.width - 40, this.height * 0.4);
     }
-    update(player, deltaTime, indexX, indexY) {
-        this.stack.lisener(player, indexX, indexY);
+    /*
+    update(player, indexX, indexY, coins) {
+        //this.stack.lisener(player, indexX, indexY, coins);
         
         
         //this.stack.update(deltaTime, player);
         //this.stack.updateDraw(context);
 
-    }
+    }*/
     draw(context) {
         
         context.beginPath();
@@ -35,13 +36,13 @@ export class Menu1 {
         context.font = 40 + 'px ' + 'Pixelify Sans';
         context.fillText(this.text, 120, this.height * 0.07);
         
-        this.stack.draw(context);
+        //this.stack.draw(context);
         //this.stack.updateDraw(context);
         context.restore();
     }
 }
 
-class Stack {
+export class Stack {
     constructor(game, x, y, width, height) {
         this.game = game;
         this.x = x;
@@ -61,7 +62,7 @@ class Stack {
         this.imgSize = 128;
         
         //this.updateDraw(context);
-        this.keyId = [];
+        //this.keyId = [];
         this.touchMenuY = '';
         this.touchMenuX = '';
         this.menuResponse = true;
@@ -71,6 +72,10 @@ class Stack {
         //this.stackTimer = 0;
         //this.lisener(player);
         this.skinID = 0;
+        this.selles = [false, true, true, true]
+        this.price = ['free', 100, 200, 500]
+    
+
         
     }
     
@@ -82,7 +87,19 @@ class Stack {
             context.strokeStyle = 'black'
             context.rect(this.x + 20 + i * this.size, this.y + 20 , this.size, this.size);
             context.stroke();
-            
+
+            context.drawImage(this.image[i], 0, 0, this.imgSize, this.imgSize, this.x * 2 + i * this.size, this.y * 2 - 10, this.imgSize, this.imgSize)
+
+            context.beginPath();
+            context.lineWidth = '3';
+            context.strokeStyle = 'black'
+            context.rect(this.x + 20 + i * this.size, 40 + this.size, this.size, 30);
+            context.stroke();
+            context.save();
+            context.fillStyle = 'white'
+            context.font = 40 + 'px ' + 'Pixelify Sans';
+            context.fillText(this.price[i], this.x + 30 + (this.size * i), this.size + 69);
+            context.restore();
             context.beginPath();
             context.lineWidth = '3';
             context.strokeStyle = 'white'
@@ -90,7 +107,6 @@ class Stack {
             context.stroke();
             
             
-            context.drawImage(this.image[i], 0, 0, this.imgSize, this.imgSize, this.x * 2 + i * this.size, this.y * 2 - 10, this.imgSize, this.imgSize)
         }
         
         context.beginPath();
@@ -100,7 +116,7 @@ class Stack {
         context.stroke(); 
         
     }
-    lisener(player, indexX, indexY) {
+    lisener(player, indexX, indexY, coins) {
         window.addEventListener('mousedown', e => {
             
             if (document.fullscreenElement) {
@@ -122,26 +138,76 @@ class Stack {
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
                 this.touchMenuX <= this.devWidth * 2 &&
-                this.menuResponse
+                this.menuResponse    
             ) {
-                this.skinID = 1;
-                player.imageInd = this.skinID;    
+                if (this.selles[1] && coins >= this.price[1]) {
+                    this.game.coins -= this.price[1];
+                    this.skinID = 1;
+
+                    
+                    player.imageInd = this.skinID;
+                    this.selles[1] = false;
+                    this.price[1] = 'own';
+                    
+                }
+             
+                else  if (!this.selles[1]){
+                    this.skinID = 1;
+                    player.imageInd = this.skinID;
+                }else {
+                    this.skinID = 0;
+                    player.imageInd = this.skinID;
+                }
+                   
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
                 this.touchMenuX <= this.devWidth * 3 &&
                 this.menuResponse
             ) {
-                this.skinID = 2;
-                player.imageInd = this.skinID;
+                if (this.selles[2] && coins >= this.price[2]) {
+                    this.game.coins -= this.price[2];
+                    this.skinID = 2;
+
+                    
+                    player.imageInd = this.skinID;
+                    this.selles[2] = false;
+                    this.price[2] = 'own';
+                    
+                }
+             
+                else  if (!this.selles[2]){
+                    this.skinID = 2;
+                    player.imageInd = this.skinID;
+                }else {
+                    this.skinID = 0;
+                    player.imageInd = this.skinID;
+                }
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height &&
                 this.touchMenuX <= this.devWidth * 4 && 
                 this.menuResponse
             ) {
-                this.skinID = 3;
-                player.imageInd = this.skinID;
+                if (this.selles[3] && coins >= this.price[3]) {
+                    this.game.coins -= this.price[3];
+                    this.skinID = 3;
+
+                    
+                    player.imageInd = this.skinID;
+                    this.selles[3] = false;
+                    this.price[3] = 'own';
+                    
+                }
+             
+                else  if (!this.selles[3]){
+                    this.skinID = 3;
+                    player.imageInd = this.skinID;
+                }else {
+                    this.skinID = 0;
+                    player.imageInd = this.skinID;
+                }
             }
-            console.log(this.touchMenuX, this.touchMenuY, this.y, this.height)
+            //console.log(this.touchMenuX, this.touchMenuY, this.y, this.height)
+            //console.log(this.selles[this.skinID], this.price[this.skinID], coins);
         });
 
         window.addEventListener('touchstart', e => {
@@ -178,7 +244,7 @@ class Stack {
                 this.skinID = 3;
                 player.imageInd = this.skinID;
             }
-            this.touches = true;
+            //this.touches = true;
             //console.log(this.touchMenuX, this.touchMenuY, this.height, this.y, this.touches);
         
         });

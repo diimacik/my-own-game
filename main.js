@@ -7,7 +7,7 @@ import { Cristal, Coins } from "./things.js";
 import { Joystick } from "./joystick.js";
 import { btnPause } from "./buttons.js";
 import { UserDevice } from "./detector.js";
-import { Menu1 } from "./menu.js";
+import { Menu1, Stack} from "./menu.js";
 
 window.addEventListener('load', function() {
     const canvas = this.document.getElementById('canvas1');
@@ -42,9 +42,12 @@ window.addEventListener('load', function() {
             this.debug = false;
             this.gameOver = false;
             this.gamePuase = true;
+            
             this.menu1 = new Menu1(this);
-            this.lives = 10;
+            this.stack = new Stack(this, 20, 50, this.menu1.width - 40, this.height * 0.4)
             this.coins = 0;
+            this.lives = 10;
+            
             this.kills = 0;
             this.energy = 0;
             this.bossPusher = false;
@@ -99,16 +102,21 @@ window.addEventListener('load', function() {
                 this.things = this.things.filter(thing => !thing.markedForDeletion);
             }
             else if (this.gamePuase) {
-                this.menu1.update(this.player, deltaTime, this.userDev.indexX, this.userDev.indexY);
+                //this.menu1.update(this.player, this.userDev.indexX, this.userDev.indexY, this.coins);
+                this.stack.lisener(this.player, this.userDev.indexX, this.userDev.indexY, this.coins)
+                this.buySkin();
             }
             
             
             //this.userDev.detector();
             
-            
-            
 
-
+        }
+        buySkin() {
+            if (this.stack.buy) {
+                this.coins -= this.stack.price[this.player.imageInd];
+            }
+            
         }
         draw(context) {
             
@@ -143,6 +151,7 @@ window.addEventListener('load', function() {
             this.btnPause.draw(context);
             if (this.gamePuase) {
                 this.menu1.draw(context);
+                this.stack.draw(context);
             }
 
         }
