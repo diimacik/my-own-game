@@ -104,20 +104,9 @@ window.addEventListener('load', function() {
             else if (this.gamePuase) {
                 //this.menu1.update(this.player, this.userDev.indexX, this.userDev.indexY, this.coins);
                 this.stack.lisener(this.player, this.userDev.indexX, this.userDev.indexY, this.coins)
-                this.buySkin();
             }
-            
-            
-            //this.userDev.detector();
-            
+        }
 
-        }
-        buySkin() {
-            if (this.stack.buy) {
-                this.coins -= this.stack.price[this.player.imageInd];
-            }
-            
-        }
         draw(context) {
             
             
@@ -197,15 +186,11 @@ window.addEventListener('load', function() {
             if (!this.gamePuase) {
                 this.gamePuase = true;
                 this.stack.menuResponse = true;
-                //this.background.restart();
             } else {
                 this.gamePuase = false;
                 this.stack.menuResponse = false;
                 this.speed = 0;
                 this.maxSpeed = 10;
-                
-                //animate(0);
-                //this.player.update();
             }
         }
 

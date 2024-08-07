@@ -36,19 +36,6 @@ export class InputHandler {
         window.addEventListener('touchstart', e => {
             this.touchX = e.changedTouches[0].pageX / this.game.userDev.indexX + this.game.btnPause.radius;
             this.touchY = e.changedTouches[0].pageY / this.game.userDev.indexY + this.game.btnPause.radius;
-            // pause touch in button
-            /*
-            const btnX = this.game.btnPause.x;
-            const btnY = this.game.btnPause.y;
-            const radius = this.game.btnPause.radius;
-            if (this.touchX >= btnX &&
-                this.touchX <= btnX + radius * 2 && 
-                this.touchY >= btnY &&
-                this.touchY <= btnY + radius * 2
-            )  {
-                this.game.setPause();
-            } */
-
         });
         window.addEventListener('touchmove', e => {
             const swipeDistace = e.changedTouches[0].pageY - this.touchY;
@@ -88,16 +75,14 @@ export class InputHandler {
             const btnX = this.game.btnPause.x - 30;
             const btnY = this.game.btnPause.y - 30;
             const radius = this.game.btnPause.radius;
-            console.log(btnX, btnY);
-            console.log(this.touchX, this.touchY);
+            //console.log(btnX, btnY);
+            //console.log(this.touchX, this.touchY);
             if (this.touchX >= btnX &&
                 this.touchX <= btnX + radius * 2 && 
                 this.touchY >= btnY &&
                 this.touchY <= btnY + radius * 2
             )  {
                 this.game.setPause();
-                this.game.speed = 0;
-                this.game.maxSpeed = 10;
             }
                 
         });
