@@ -196,11 +196,11 @@ window.addEventListener('load', function() {
         setPause() {
             if (!this.gamePuase) {
                 this.gamePuase = true;
-                this.menu1.stack.menuResponse = true;
+                this.stack.menuResponse = true;
                 //this.background.restart();
             } else {
                 this.gamePuase = false;
-                this.menu1.stack.menuResponse = false;
+                this.stack.menuResponse = false;
                 this.speed = 0;
                 this.maxSpeed = 10;
                 

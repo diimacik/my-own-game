@@ -60,23 +60,12 @@ export class Stack {
         
         this.size = 157;
         this.imgSize = 128;
-        
-        //this.updateDraw(context);
-        //this.keyId = [];
         this.touchMenuY = '';
         this.touchMenuX = '';
         this.menuResponse = true;
-        
-        //this.fps = 10;
-        //this.stackInterval = 1000/this.fps;
-        //this.stackTimer = 0;
-        //this.lisener(player);
         this.skinID = 0;
         this.selles = [false, true, true, true]
-        this.price = ['free', 100, 200, 500]
-    
-
-        
+        this.price = ['free', 100, 200, 500]    
     }
     
     draw(context) {
@@ -117,6 +106,7 @@ export class Stack {
         
     }
     lisener(player, indexX, indexY, coins) {
+        
         window.addEventListener('mousedown', e => {
             
             if (document.fullscreenElement) {
@@ -206,8 +196,6 @@ export class Stack {
                     player.imageInd = this.skinID;
                 }
             }
-            //console.log(this.touchMenuX, this.touchMenuY, this.y, this.height)
-            //console.log(this.selles[this.skinID], this.price[this.skinID], coins);
         });
 
         window.addEventListener('touchstart', e => {
@@ -244,27 +232,6 @@ export class Stack {
                 this.skinID = 3;
                 player.imageInd = this.skinID;
             }
-            //this.touches = true;
-            //console.log(this.touchMenuX, this.touchMenuY, this.height, this.y, this.touches);
-        
-        });
-        
+        });    
     }
-    /*
-    update(deltaTime, player) {
-        if (this.stackTimer > this.stackInterval) {
-            this.lisener(player);
-            this.skinID;
-            console.log(this.skinID);
-            this.stackTimer = 0;
-        } else {
-            this.stackTimer += deltaTime;
-        }
-    }
-        */
-        
-    
-    
-    
-
 }
