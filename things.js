@@ -81,7 +81,7 @@ export class Coins extends Things {
     }
     getEfact() {
         this.game.score.coins++;
-        this.game.saveCoins();
+        this.game.saveAll();
         //localStorage.setItem('this.score', JSON.stringify(this.score));
     }
 

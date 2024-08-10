@@ -48,7 +48,11 @@ window.addEventListener('load', function() {
             
             this.menu1 = new Menu1(this);
             this.stack = new Stack(this, 20, 50, this.menu1.width - 40, this.height * 0.4)
-            this.score = JSON.parse(localStorage.getItem('score'));
+            this.score = JSON.parse(localStorage.getItem('score')) || {
+                coins:0,
+                selles:[false, true, true, true],
+                price:['free', 100, 200, 500]
+            }
             //this.coins = this.score.coins;
             this.lives = 10;
             
@@ -63,7 +67,9 @@ window.addEventListener('load', function() {
         update(deltaTime) {
             if (this.score === undefined) {
                 this.score = {
-                    coins:0
+                    coins:0,
+                    selles:[false, true, true, true],
+                    price:['free', 100, 200, 500]
                 }
             }
             
@@ -179,7 +185,7 @@ window.addEventListener('load', function() {
             if (Math.random() < 0.9) this.things.push(new Coins(this));
             else this.things.push(new Cristal(this));
         } 
-        saveCoins() {
+        saveAll() {
             localStorage.setItem('score', JSON.stringify(this.score));
 
         }

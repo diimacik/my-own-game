@@ -64,8 +64,8 @@ export class Stack {
         this.touchMenuX = '';
         this.menuResponse = true;
         this.skinID = 0;
-        this.selles = [false, true, true, true]
-        this.price = ['free', 100, 200, 500]    
+        //this.selles = this.game.score.selles;
+        //this.price = ['free', 100, 200, 500];   
     }
     
     draw(context) {
@@ -87,7 +87,7 @@ export class Stack {
             context.save();
             context.fillStyle = 'white'
             context.font = 40 + 'px ' + 'Pixelify Sans';
-            context.fillText(this.price[i], this.x + 30 + (this.size * i), this.size + 69);
+            context.fillText(this.game.score.price[i], this.x + 30 + (this.size * i), this.size + 69);
             context.restore();
             context.beginPath();
             context.lineWidth = '3';
@@ -130,18 +130,18 @@ export class Stack {
                 this.touchMenuX <= this.devWidth * 2 &&
                 this.menuResponse    
             ) {
-                if (this.selles[1] && coins >= this.price[1]) {
-                    this.game.score.coins -= this.price[1];
+                if (this.game.score.selles[1] && coins >= this.game.score.price[1]) {
+                    this.game.score.coins -= this.game.score.price[1];
                     this.skinID = 1;
 
                     
                     player.imageInd = this.skinID;
-                    this.selles[1] = false;
-                    this.price[1] = 'own';
+                    this.game.score.selles[1] = false;
+                    this.game.score.price[1] = 'own';
                     
                 }
              
-                else  if (!this.selles[1]){
+                else  if (!this.game.score.selles[1]){
                     this.skinID = 1;
                     player.imageInd = this.skinID;
                 }else {
@@ -154,18 +154,18 @@ export class Stack {
                 this.touchMenuX <= this.devWidth * 3 &&
                 this.menuResponse
             ) {
-                if (this.selles[2] && coins >= this.price[2]) {
-                    this.game.score.coins -= this.price[2];
+                if (this.game.score.selles[2] && coins >= this.game.score.price[2]) {
+                    this.game.score.coins -= this.game.score.price[2];
                     this.skinID = 2;
 
                     
                     player.imageInd = this.skinID;
-                    this.selles[2] = false;
-                    this.price[2] = 'own';
+                    this.game.score.selles[2] = false;
+                    this.game.score.price[2] = 'own';
                     
                 }
              
-                else  if (!this.selles[2]){
+                else  if (!this.game.score.selles[2]){
                     this.skinID = 2;
                     player.imageInd = this.skinID;
                 }else {
@@ -177,18 +177,18 @@ export class Stack {
                 this.touchMenuX <= this.devWidth * 4 && 
                 this.menuResponse
             ) {
-                if (this.selles[3] && coins >= this.price[3]) {
-                    this.game.score.coins -= this.price[3];
+                if (this.game.score.selles[3] && coins >= this.game.score.price[3]) {
+                    this.game.score.coins -= this.game.score.price[3];
                     this.skinID = 3;
 
                     
                     player.imageInd = this.skinID;
-                    this.selles[3] = false;
-                    this.price[3] = 'own';
+                    this.game.score.selles[3] = false;
+                    this.game.score.price[3] = 'own';
                     
                 }
              
-                else  if (!this.selles[3]){
+                else  if (!this.game.score.selles[3]){
                     this.skinID = 3;
                     player.imageInd = this.skinID;
                 }else {
@@ -196,6 +196,7 @@ export class Stack {
                     player.imageInd = this.skinID;
                 }
             }
+            this.game.saveAll();
         });
 
         window.addEventListener('touchstart', e => {
@@ -234,4 +235,5 @@ export class Stack {
             }
         });    
     }
+    
 }
