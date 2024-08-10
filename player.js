@@ -16,7 +16,7 @@ export class Player {
             this.playerImg2,
             this.playerImg3,
         ];
-        this.imageInd = 0;
+        //this.imageInd = 0;
         this.imagesMax = 3;
         this.x = 0;
         this.y = this.game.height - this.height - this.game.ground;
@@ -65,7 +65,7 @@ export class Player {
             }
             this.frameTimer = 0;
         } else this.frameTimer += deltaTime;
-        if (this.superPower) {
+        if (this.game.score.superPower) {
             this.game.particles.unshift(new Ice(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5));
         }
         if (this.damage) {
@@ -99,13 +99,13 @@ export class Player {
         
 
         
-        context.drawImage(this.image[this.imageInd], this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+        context.drawImage(this.image[this.game.score.imageInd], this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
 
     }
     changeInd() {
-        if (this.imageInd >= this.imagesMax) {
-            this.imageInd = 0;
-        }else this.imageInd++;
+        if (this.game.score.imageInd >= this.imagesMax) {
+            this.game.score.imageInd = 0;
+        }else this.game.score.imageInd++;
     }
 
         
@@ -132,9 +132,9 @@ export class Player {
             if (distance < enemy.width / 2.5 + this.width / 3) {
                 
                 this.damage = true;
-                if (!this.superPower && this.damage) {
+                if (!this.game.score.superPower && this.damage) {
                     if (this.damageTimer > this.damageInterval) {
-                        this.game.lives--;
+                        this.game.score.lives--;
                         this.damage = false;
                         this.damageTimer = 0;
                     }
@@ -143,7 +143,7 @@ export class Player {
                     }
                 }
 
-                else if (this.superPower) {
+                else if (this.game.score.superPower) {
                     this.damage = false;
                     enemy.lives--;
                      
@@ -152,10 +152,10 @@ export class Player {
                         enemy.markedForDeletion = true;
                         this.game.kills++; 
                     }  
-                    if (this.game.energy == 0) this.superPower = false;
-                    else this.game.energy--;
+                    if (this.game.score.energy == 0) this.superPower = false;
+                    else this.game.score.energy--;
                 }
-                if (this.game.lives == 0) {
+                if (this.game.score.lives == 0) {
                     this.game.gameOver = true;
                     }
             }

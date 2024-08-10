@@ -56,11 +56,11 @@ export class Cristal extends Things {
         this.maxFrame = 5;
     }
     getEfact() {
-        if (!this.game.player.superPower) {
-            this.game.player.superPower = true;
-            this.game.energy += 10;
+        if (!this.game.score.superPower) {
+            this.game.score.superPower = true;
+            this.game.score.energy += 10;
         }
-        else this.game.energy++;
+        else this.game.score.energy++;
     }
 }
 

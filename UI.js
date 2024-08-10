@@ -14,11 +14,11 @@ export class UI {
         // kills
         context.fillText('Kills ' + this.game.kills, 20, 80);
         // lives
-        for (let i = 0; i < this.game.lives; i++) {
+        for (let i = 0; i < this.game.score.lives; i++) {
             context.drawImage(this.livesImage, 30 * i + 20, 95, 25, 25);
         }
         // energy
-        for (let i = 0; i < this.game.energy; i++) {
+        for (let i = 0; i < this.game.score.energy; i++) {
             context.drawImage(this.energyImage, 30 * i + 20, 100, 25, 25);
         }
         if (this.game.gameOver) {

@@ -51,10 +51,14 @@ window.addEventListener('load', function() {
             this.score = JSON.parse(localStorage.getItem('score')) || {
                 coins:0,
                 selles:[false, true, true, true],
-                price:['free', 100, 200, 500]
+                price:['free', 100, 200, 500],
+                lives:10,
+                energy:0,
+                superPower:false,
+                imageInd:0,
             }
             //this.coins = this.score.coins;
-            this.lives = 10;
+            //this.lives = 10;
             
             this.kills = 0;
             this.energy = 0;
@@ -69,7 +73,11 @@ window.addEventListener('load', function() {
                 this.score = {
                     coins:0,
                     selles:[false, true, true, true],
-                    price:['free', 100, 200, 500]
+                    price:['free', 100, 200, 500],
+                    lives:10,
+                    energy:0,
+                    superPower:false,
+                    imageInd:0,
                 }
             }
             

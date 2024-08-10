@@ -63,7 +63,7 @@ export class Stack {
         this.touchMenuY = '';
         this.touchMenuX = '';
         this.menuResponse = true;
-        this.skinID = 0;
+        //this.skinID = 0;
         //this.selles = this.game.score.selles;
         //this.price = ['free', 100, 200, 500];   
     }
@@ -92,7 +92,7 @@ export class Stack {
             context.beginPath();
             context.lineWidth = '3';
             context.strokeStyle = 'white'
-            context.rect(this.x + 20 + this.skinID * this.size, this.y + 20 , this.size, this.size);
+            context.rect(this.x + 20 + this.game.score.imageInd * this.size, this.y + 20 , this.size, this.size);
             context.stroke();
             
             
@@ -122,8 +122,8 @@ export class Stack {
                 this.touchMenuX <= this.devWidth &&
                 this.menuResponse
             ) {
-                this.skinID = 0;
-                player.imageInd = this.skinID;
+                
+                this.game.score.imageInd = 0;
                 console.log('bumm');
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
@@ -132,21 +132,20 @@ export class Stack {
             ) {
                 if (this.game.score.selles[1] && coins >= this.game.score.price[1]) {
                     this.game.score.coins -= this.game.score.price[1];
-                    this.skinID = 1;
+                    
 
                     
-                    player.imageInd = this.skinID;
+                    this.game.score.imageInd = this.skinID;
                     this.game.score.selles[1] = false;
                     this.game.score.price[1] = 'own';
                     
                 }
              
                 else  if (!this.game.score.selles[1]){
-                    this.skinID = 1;
-                    player.imageInd = this.skinID;
+                    
+                    this.game.score.imageInd = 1;
                 }else {
-                    this.skinID = 0;
-                    player.imageInd = this.skinID;
+                    this.game.score.imageInd = 0;
                 }
                    
             }
@@ -156,21 +155,16 @@ export class Stack {
             ) {
                 if (this.game.score.selles[2] && coins >= this.game.score.price[2]) {
                     this.game.score.coins -= this.game.score.price[2];
-                    this.skinID = 2;
-
-                    
-                    player.imageInd = this.skinID;
+                    this.game.score.imageInd = 2;
                     this.game.score.selles[2] = false;
                     this.game.score.price[2] = 'own';
                     
                 }
              
                 else  if (!this.game.score.selles[2]){
-                    this.skinID = 2;
-                    player.imageInd = this.skinID;
+                    this.game.score.imageInd = 2;
                 }else {
-                    this.skinID = 0;
-                    player.imageInd = this.skinID;
+                    this.game.score.imageInd = 0;
                 }
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height &&
@@ -179,21 +173,14 @@ export class Stack {
             ) {
                 if (this.game.score.selles[3] && coins >= this.game.score.price[3]) {
                     this.game.score.coins -= this.game.score.price[3];
-                    this.skinID = 3;
-
-                    
-                    player.imageInd = this.skinID;
+                    this.game.score.imageInd = 3;
                     this.game.score.selles[3] = false;
                     this.game.score.price[3] = 'own';
-                    
-                }
-             
+                }         
                 else  if (!this.game.score.selles[3]){
-                    this.skinID = 3;
-                    player.imageInd = this.skinID;
+                    this.game.score.imageInd = 3;
                 }else {
-                    this.skinID = 0;
-                    player.imageInd = this.skinID;
+                    this.game.score.imageInd = 0;
                 }
             }
             this.game.saveAll();
@@ -207,8 +194,7 @@ export class Stack {
                 this.touchMenuX <= this.devWidth &&
                 this.menuResponse
             ) {
-                this.skinID = 0;
-                player.imageInd = this.skinID;
+                this.game.score.imageInd = 0;
                 
                 console.log('bumm');
             }
@@ -216,22 +202,19 @@ export class Stack {
                 this.touchMenuX <= this.devWidth * 2 &&
                 this.menuResponse
             ) {
-                this.skinID = 1;
-                player.imageInd = this.skinID;    
+                this.game.score.imageInd = 1;    
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
                 this.touchMenuX <= this.devWidth * 3 &&
                 this.menuResponse
             ) {
-                this.skinID = 2;
-                player.imageInd = this.skinID;
+                this.game.score.imageInd = 2;
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height &&
                 this.touchMenuX <= this.devWidth * 4 && 
                 this.menuResponse
             ) {
-                this.skinID = 3;
-                player.imageInd = this.skinID;
+                this.game.score.imageInd = 3;
             }
         });    
     }
