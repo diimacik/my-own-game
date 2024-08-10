@@ -9,6 +9,7 @@ import { btnPause } from "./buttons.js";
 import { UserDevice } from "./detector.js";
 import { Menu1, Stack} from "./menu.js";
 
+
 window.addEventListener('load', function() {
     const canvas = this.document.getElementById('canvas1');
     canvas.width = 900;
@@ -16,6 +17,8 @@ window.addEventListener('load', function() {
     const ctx = canvas.getContext('2d');
     const fullScreenButton =  this.document.getElementById('fullScreen')
 
+    
+    
     class Game {
         constructor(width, height) {
             this.width = width;
@@ -45,7 +48,8 @@ window.addEventListener('load', function() {
             
             this.menu1 = new Menu1(this);
             this.stack = new Stack(this, 20, 50, this.menu1.width - 40, this.height * 0.4)
-            this.coins = 0;
+            this.score = JSON.parse(localStorage.getItem('score'));
+            //this.coins = this.score.coins;
             this.lives = 10;
             
             this.kills = 0;
@@ -57,6 +61,12 @@ window.addEventListener('load', function() {
             //this.joystick.listener();
         }
         update(deltaTime) {
+            if (this.score === undefined) {
+                this.score = {
+                    coins:0
+                }
+            }
+            
             if (!this.gamePuase) {
                 
                 this.background.update(deltaTime);
@@ -103,7 +113,7 @@ window.addEventListener('load', function() {
             }
             else if (this.gamePuase) {
                 //this.menu1.update(this.player, this.userDev.indexX, this.userDev.indexY, this.coins);
-                this.stack.lisener(this.player, this.userDev.indexX, this.userDev.indexY, this.coins)
+                this.stack.lisener(this.player, this.userDev.indexX, this.userDev.indexY, this.score.coins)
             }
         }
 
@@ -169,6 +179,10 @@ window.addEventListener('load', function() {
             if (Math.random() < 0.9) this.things.push(new Coins(this));
             else this.things.push(new Cristal(this));
         } 
+        saveCoins() {
+            localStorage.setItem('score', JSON.stringify(this.score));
+
+        }
         restartGame() {
             //this.player.restart();
             this.background.restart();
@@ -186,6 +200,7 @@ window.addEventListener('load', function() {
             if (!this.gamePuase) {
                 this.gamePuase = true;
                 this.stack.menuResponse = true;
+                
             } else {
                 this.gamePuase = false;
                 this.stack.menuResponse = false;
@@ -211,8 +226,11 @@ window.addEventListener('load', function() {
         }
         
     }
+
+    
     fullScreenButton.addEventListener('click', toggleFullScreen)
     console.log(game.userDev.screenWidth, game.userDev.screenHeight, game.userDev.indexX, game.userDev.indexY);
+
     function animate(timeStapm) {
         const deltaTime = timeStapm - lastTime;
         lastTime = timeStapm;
@@ -220,6 +238,7 @@ window.addEventListener('load', function() {
         game.update(deltaTime);
         game.draw(ctx);
         
+
         if (!game.gameOver) requestAnimationFrame(animate);
         
 

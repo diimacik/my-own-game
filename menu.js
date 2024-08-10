@@ -131,7 +131,7 @@ export class Stack {
                 this.menuResponse    
             ) {
                 if (this.selles[1] && coins >= this.price[1]) {
-                    this.game.coins -= this.price[1];
+                    this.game.score.coins -= this.price[1];
                     this.skinID = 1;
 
                     
@@ -155,7 +155,7 @@ export class Stack {
                 this.menuResponse
             ) {
                 if (this.selles[2] && coins >= this.price[2]) {
-                    this.game.coins -= this.price[2];
+                    this.game.score.coins -= this.price[2];
                     this.skinID = 2;
 
                     
@@ -178,7 +178,7 @@ export class Stack {
                 this.menuResponse
             ) {
                 if (this.selles[3] && coins >= this.price[3]) {
-                    this.game.coins -= this.price[3];
+                    this.game.score.coins -= this.price[3];
                     this.skinID = 3;
 
                     

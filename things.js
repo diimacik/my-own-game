@@ -80,7 +80,9 @@ export class Coins extends Things {
         this.maxFrame = 3;
     }
     getEfact() {
-        this.game.coins++;
+        this.game.score.coins++;
+        this.game.saveCoins();
+        //localStorage.setItem('this.score', JSON.stringify(this.score));
     }
 
 }

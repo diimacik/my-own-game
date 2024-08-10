@@ -17,7 +17,7 @@ class Layer {
     }
     draw(context) {
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
-        context.drawImage(this.image, this.x + this.width, 0, this.width, this.height);
+        context.drawImage(this.image, this.x + this.width - this.speadModifier, 0, this.width, this.height);
     }
 }
 export class Backgound {

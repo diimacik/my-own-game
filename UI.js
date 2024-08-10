@@ -10,7 +10,7 @@ export class UI {
         context.save();
         context.font = this.fontSize + 'px ' + this.fontFamily;
         // coins
-        context.fillText('Coins ' + this.game.coins, 20, 50);
+        context.fillText('Coins ' + this.game.score.coins, 20, 50);
         // kills
         context.fillText('Kills ' + this.game.kills, 20, 80);
         // lives
