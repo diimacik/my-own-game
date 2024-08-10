@@ -152,7 +152,7 @@ export class Player {
                         enemy.markedForDeletion = true;
                         this.game.kills++; 
                     }  
-                    if (this.game.score.energy == 0) this.superPower = false;
+                    if (this.game.score.energy == 0) this.game.score.superPower = false;
                     else this.game.score.energy--;
                 }
                 if (this.game.score.lives == 0) {

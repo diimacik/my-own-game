@@ -57,20 +57,25 @@ export class Stack {
             document.getElementById('player2'),
             document.getElementById('player3'),
         ];
-        
+        this.smallCoin = document.getElementById('smallCoin');
+        this.coinsSize = 16;
         this.size = 157;
         this.imgSize = 128;
         this.touchMenuY = '';
         this.touchMenuX = '';
         this.menuResponse = true;
-        //this.skinID = 0;
-        //this.selles = this.game.score.selles;
-        //this.price = ['free', 100, 200, 500];   
+        
+        this.windows = {
+            x: 20,
+            y: 280,
+            width:this.game.menu1.width - 40,
+            height:200,
+        }
     }
     
     draw(context) {
         for(let i = 0;i < this.countity; i++) {
-            
+            let check = typeof this.game.score.price[i];
             context.beginPath();
             context.lineWidth = '3';
             context.strokeStyle = 'black'
@@ -87,8 +92,15 @@ export class Stack {
             context.save();
             context.fillStyle = 'white'
             context.font = 40 + 'px ' + 'Pixelify Sans';
-            context.fillText(this.game.score.price[i], this.x + 30 + (this.size * i), this.size + 69);
+            context.fillText(this.game.score.price[i], this.x + 45 + (this.size * i), this.size + 69);
             context.restore();
+            
+            if (check === "number") {
+                context.drawImage(this.smallCoin, 0, 0, this.coinsSize, this.coinsSize, this.x * 2 + i * this.size + 5, this.y + this.size, this.coinsSize, this.coinsSize);
+
+            }
+            //context.drawImage(this.smallCoin, 0, 0, this.coinsSize, this.coinsSize, this.x * 2 + i * this.size + 3, this.y + this.size, this.coinsSize, this.coinsSize);
+
             context.beginPath();
             context.lineWidth = '3';
             context.strokeStyle = 'white'
@@ -103,9 +115,16 @@ export class Stack {
         context.strokeStyle = 'black'
         context.rect(this.x, this.y, this.width, this.height);
         context.stroke(); 
-        
+        this.drawWindows(context);
     }
-    lisener(player, indexX, indexY, coins) {
+    drawWindows(context) {
+        context.beginPath();
+        context.lineWidth = '3';
+        context.strokeStyle = 'black'
+        context.rect(this.windows.x, this.windows.y, this.windows.width, this.windows.height);
+        context.stroke();
+    }
+    lisener(indexX, indexY) {
         
         window.addEventListener('mousedown', e => {
             
@@ -124,13 +143,14 @@ export class Stack {
             ) {
                 
                 this.game.score.imageInd = 0;
+                
                 console.log('bumm');
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
                 this.touchMenuX <= this.devWidth * 2 &&
                 this.menuResponse    
             ) {
-                if (this.game.score.selles[1] && coins >= this.game.score.price[1]) {
+                if (this.game.score.selles[1] && this.game.score.coins >= this.game.score.price[1]) {
                     this.game.score.coins -= this.game.score.price[1];
                     
 
@@ -153,11 +173,12 @@ export class Stack {
                 this.touchMenuX <= this.devWidth * 3 &&
                 this.menuResponse
             ) {
-                if (this.game.score.selles[2] && coins >= this.game.score.price[2]) {
+                if (this.game.score.selles[2] && this.game.score.coins >= this.game.score.price[2]) {
                     this.game.score.coins -= this.game.score.price[2];
                     this.game.score.imageInd = 2;
                     this.game.score.selles[2] = false;
                     this.game.score.price[2] = 'own';
+
                     
                 }
              
@@ -171,7 +192,7 @@ export class Stack {
                 this.touchMenuX <= this.devWidth * 4 && 
                 this.menuResponse
             ) {
-                if (this.game.score.selles[3] && coins >= this.game.score.price[3]) {
+                if (this.game.score.selles[3] && this.game.score.coins >= this.game.score.price[3]) {
                     this.game.score.coins -= this.game.score.price[3];
                     this.game.score.imageInd = 3;
                     this.game.score.selles[3] = false;
@@ -182,6 +203,7 @@ export class Stack {
                 }else {
                     this.game.score.imageInd = 0;
                 }
+                
             }
             this.game.saveAll();
         });

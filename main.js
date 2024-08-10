@@ -80,7 +80,7 @@ window.addEventListener('load', function() {
                     imageInd:0,
                 }
             }
-            
+
             if (!this.gamePuase) {
                 
                 this.background.update(deltaTime);
@@ -127,7 +127,7 @@ window.addEventListener('load', function() {
             }
             else if (this.gamePuase) {
                 //this.menu1.update(this.player, this.userDev.indexX, this.userDev.indexY, this.coins);
-                this.stack.lisener(this.player, this.userDev.indexX, this.userDev.indexY, this.score.coins)
+                this.stack.lisener(this.player, this.userDev.indexX, this.userDev.indexY)
             }
         }
 
