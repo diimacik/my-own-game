@@ -9,6 +9,8 @@ export class Menu1 {
         this.height = this.game.height;
         this.color = 'rgba(66, 110, 182, 0.8)';
         this.text = 'skin of player';
+        this.menuInd = 1;
+        
         //this.stack = new Stack(this, 20, 50, this.width - 40, this.height * 0.4);
     }
     /*
@@ -71,6 +73,7 @@ export class Stack {
             width:this.game.menu1.width - 40,
             height:200,
         }
+        this.text = ["It's first skin in this Game", 'More energy', 'More hearts', 'Just tegnoligy save hem']
     }
     
     draw(context) {
@@ -115,14 +118,21 @@ export class Stack {
         context.strokeStyle = 'black'
         context.rect(this.x, this.y, this.width, this.height);
         context.stroke(); 
+        
         this.drawWindows(context);
     }
     drawWindows(context) {
+        
         context.beginPath();
         context.lineWidth = '3';
         context.strokeStyle = 'black'
         context.rect(this.windows.x, this.windows.y, this.windows.width, this.windows.height);
         context.stroke();
+        context.save();
+        context.fillStyle = 'white'
+        context.font = 40 + 'px ' + 'Pixelify Sans';
+        context.fillText(this.text[this.game.score.imageInd], this.windows.x + 45, this.windows.y + 100);
+        context.restore();
     }
     lisener(indexX, indexY) {
         

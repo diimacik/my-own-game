@@ -5,7 +5,7 @@ import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
 import { Cristal, Coins } from "./things.js";
 import { Joystick } from "./joystick.js";
-import { btnPause } from "./buttons.js";
+import { btnPause, Btn1, Btn2, Btn3} from "./buttons.js";
 import { UserDevice } from "./detector.js";
 import { Menu1, Stack} from "./menu.js";
 
@@ -32,6 +32,11 @@ window.addEventListener('load', function() {
             this.UI = new UI(this);
             this.joystick = new Joystick(this, this.width * 0.16, this.height * 0.6, 75, 25);
             this.btnPause = new btnPause(this, this.width * 0.9, this.height * 0.1)
+            this.btn1 = [
+                new Btn1(this, this.width * 0.9 - 50, this.height * 0.3, 120, 50), 
+                new Btn2(this, this.width * 0.9 - 50, this.height * 0.5, 120, 50), 
+                new Btn3(this, this.width * 0.9 - 50, this.height * 0.7, 120, 50),
+            ]
             this.enemies = [];
             this.things = [];
             this.particles = [];
@@ -128,6 +133,9 @@ window.addEventListener('load', function() {
             else if (this.gamePuase) {
                 //this.menu1.update(this.player, this.userDev.indexX, this.userDev.indexY, this.coins);
                 this.stack.lisener(this.player, this.userDev.indexX, this.userDev.indexY)
+                for (let i = 0; i < this.btn1.length; i++) {
+                    this.btn1[i].lisener();
+                }
             }
         }
 
@@ -162,11 +170,24 @@ window.addEventListener('load', function() {
             
             //this.menu1.stack.updateDraw(context);
             this.btnPause.draw(context);
+            
             if (this.gamePuase) {
                 this.menu1.draw(context);
-                this.stack.draw(context);
+                this.btn1[0].draw(context);
+                this.btn1[1].draw(context);
+                this.btn1[2].draw(context);
+                if (this.menu1.menuInd === 1) {
+                    this.stack.draw(context);
+                }
+                else if (this.menu1.menuInd === 2) {
+                    //this.stack.draw(context);
+                }
+                else if (this.menu1.menuInd === 3) {
+                    //this.stack.draw(context);
+                }
             }
-
+            
+                
         }
         addEnemy() {
             if (this.kills >= 50 && Number.isInteger(this.kills / 50) && this.bossPusher) {    
@@ -214,6 +235,7 @@ window.addEventListener('load', function() {
             if (!this.gamePuase) {
                 this.gamePuase = true;
                 this.stack.menuResponse = true;
+                this.menu1.menuInd = 1;
                 
             } else {
                 this.gamePuase = false;

@@ -27,3 +27,109 @@ export class btnPause {
         context.restore();
     }
 }
+
+class Btn {
+    constructor(x, y, width, heigth) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = heigth;
+        this.preset = false;
+    }
+    draw(context) {
+        context.fillStyle = this.color;
+        context.fillRect(this.x, this.y, this.width, this.height);
+        context.save();
+        context.fillStyle = 'white';
+        context.font = 25 + 'px ' + 'Pixelify Sans';
+        context.fillText(this.text, this.x + 10, this.y + this.height - 15);
+        context.restore();
+    }
+    lisener() {
+        addEventListener('mousedown', e => {
+            this.touchY = e.offsetY;
+            this.touchX = e.offsetX;
+            if (document.fullscreenElement) {
+                this.touchX = e.pageX / this.game.userDev.indexX;
+                this.touchY = e.pageY / this.game.userDev.indexY;
+
+            };
+            if (this.touchX >= this.x && this.touchX <= this.x + 100 &&
+                this.touchY >= this.y && this.touchY <= this.y + 50
+            ){
+                this.preset = true;
+            }
+        });
+        addEventListener('mouseup', () => {
+            this.preset = false;
+        });
+    }
+}
+
+export class Btn1 extends Btn {
+    constructor(game, x, y, width, heigth) {
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = heigth;
+        this.color = 'rgba(0, 0, 0, 1)';
+        this.text = 'skin';
+    }
+    draw(context) {
+        super.draw(context);
+    }
+    lisener(){
+        super.lisener();
+        if (this.preset) {
+            this.game.menu1.menuInd = 1;
+            console.log('preset on 1 btn');
+        }
+    }
+}
+export class Btn2 extends Btn {
+    constructor(game, x, y, width, heigth) {
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = heigth;
+        this.color = 'rgba(0, 0, 0, 1)';
+        this.text = 'achieves';
+    }
+    draw(context) {
+        super.draw(context);
+    }
+    lisener(){
+        super.lisener();
+        if (this.preset) {
+            this.game.menu1.menuInd = 2;
+            console.log('preset on 2 btn');
+        }
+    }
+}
+export class Btn3 extends Btn {
+    constructor(game, x, y, width, heigth) {
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = heigth;
+        this.color = 'rgba(0, 0, 0, 1)';
+        this.text = 'setting';
+    }
+    draw(context) {
+        super.draw(context);
+    }
+    lisener(){
+        super.lisener();
+        if (this.preset) {
+            this.game.menu1.menuInd = 3;
+            console.log('preset on 3 btn');
+        }
+    }
+
+}
