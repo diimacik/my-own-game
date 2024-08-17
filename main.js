@@ -5,9 +5,10 @@ import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
 import { Cristal, Coins } from "./things.js";
 import { Joystick } from "./joystick.js";
-import { btnPause, Btn1, Btn2, Btn3} from "./buttons.js";
+import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight} from "./buttons.js";
 import { UserDevice } from "./detector.js";
 import { Menu1, Stack} from "./menu.js";
+import { Achiev } from "./achieves.js";
 
 
 window.addEventListener('load', function() {
@@ -37,6 +38,11 @@ window.addEventListener('load', function() {
                 new Btn2(this, this.width * 0.9 - 50, this.height * 0.5, 120, 50), 
                 new Btn3(this, this.width * 0.9 - 50, this.height * 0.7, 120, 50),
             ]
+            this.menu1 = new Menu1(this);
+            this.achievBtn = [
+                new BtnLeft(this, 20, 230,  50, 250), 
+                new BtnRight(this, this.menu1.width - 70, 230, 50, 250),
+            ]
             this.enemies = [];
             this.things = [];
             this.particles = [];
@@ -51,8 +57,9 @@ window.addEventListener('load', function() {
             this.gameOver = false;
             this.gamePuase = true;
             
-            this.menu1 = new Menu1(this);
-            this.stack = new Stack(this, 20, 50, this.menu1.width - 40, this.height * 0.4)
+            
+            this.stack = new Stack(this, 20, 50, this.menu1.width - 40, this.height * 0.4);
+            this.achiev = new Achiev(this);
             this.score = JSON.parse(localStorage.getItem('score')) || {
                 coins:0,
                 selles:[false, true, true, true],
@@ -136,7 +143,12 @@ window.addEventListener('load', function() {
                 for (let i = 0; i < this.btn1.length; i++) {
                     this.btn1[i].lisener();
                 }
-            }
+                if (this.gamePuase && this.menu1.menuInd === 2) {
+                    
+                    this.achievBtn[0].lisener();
+                    this.achievBtn[1].lisener();
+                }
+            }  
         }
 
         draw(context) {
@@ -176,10 +188,14 @@ window.addEventListener('load', function() {
                 this.btn1[0].draw(context);
                 this.btn1[1].draw(context);
                 this.btn1[2].draw(context);
+                
                 if (this.menu1.menuInd === 1) {
                     this.stack.draw(context);
                 }
                 else if (this.menu1.menuInd === 2) {
+                    this.achiev.draw(context);
+                    this.achievBtn[0].draw(context);
+                    this.achievBtn[1].draw(context);
                     //this.stack.draw(context);
                 }
                 else if (this.menu1.menuInd === 3) {

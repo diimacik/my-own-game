@@ -39,11 +39,14 @@ class Btn {
     draw(context) {
         context.fillStyle = this.color;
         context.fillRect(this.x, this.y, this.width, this.height);
-        context.save();
-        context.fillStyle = 'white';
-        context.font = 25 + 'px ' + 'Pixelify Sans';
-        context.fillText(this.text, this.x + 10, this.y + this.height - 15);
-        context.restore();
+        if (this.text) {
+            context.save();
+            context.fillStyle = 'white';
+            context.font = 25 + 'px ' + 'Pixelify Sans';
+            context.fillText(this.text, this.x + 10, this.y + this.height - 15);
+            context.restore();
+        }
+        
     }
     lisener() {
         addEventListener('mousedown', e => {
@@ -54,11 +57,13 @@ class Btn {
                 this.touchY = e.pageY / this.game.userDev.indexY;
 
             };
-            if (this.touchX >= this.x && this.touchX <= this.x + 100 &&
-                this.touchY >= this.y && this.touchY <= this.y + 50
+            if (this.touchX >= this.x && this.touchX <= this.x + this.width &&
+                this.touchY >= this.y && this.touchY <= this.y + this.height
             ){
                 this.preset = true;
+                
             }
+            //this.preset = false;
         });
         addEventListener('mouseup', () => {
             this.preset = false;
@@ -129,6 +134,73 @@ export class Btn3 extends Btn {
         if (this.preset) {
             this.game.menu1.menuInd = 3;
             console.log('preset on 3 btn');
+        }
+    }
+
+}
+
+export class BtnLeft extends Btn {
+    constructor(game, x, y, width, heigth) {
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = heigth;
+        this.color = 'rgba(0, 0, 0, 1)';
+        //this.text = '<';
+    }
+    draw(context) {
+        super.draw(context);
+        context.save();
+        context.fillStyle = 'white';
+        context.font = 25 + 'px ' + 'Pixelify Sans';
+        context.fillText('<', this.x - 10 +  this.width / 2, this.y + this.height / 2);
+        context.restore();
+    }
+    lisener(){
+        super.lisener();
+        if (this.preset) {
+            this.game.achiev.achieveInd--;
+            if (this.game.achiev.achieveInd < 0) {
+                this.game.achiev.achieveInd = 9;
+            }
+            this.preset = false;
+            console.log('preset on lisf');
+        }
+    }
+
+}
+
+export class BtnRight extends Btn {
+    constructor(game, x, y, width, heigth) {
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = heigth;
+        this.color = 'rgba(0, 0, 0, 1)';
+        //this.text = '>';
+    }
+    draw(context) {
+        super.draw(context);
+        context.save();
+        context.fillStyle = 'white';
+        context.font = 25 + 'px ' + 'Pixelify Sans';
+        context.fillText('>', this.x + this.width / 2, this.y + this.height / 2);
+        context.restore();
+    }
+    lisener(){
+        super.lisener();
+        if (this.preset) {
+            this.game.achiev.achieveInd++;
+            if (this.game.achiev.achieveInd > 9) {
+                this.game.achiev.achieveInd = 0;
+            }
+            this.preset = false;
+            console.log('preset on right');
+
         }
     }
 
