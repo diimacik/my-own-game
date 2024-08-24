@@ -89,7 +89,7 @@ export class Btn1 extends Btn {
         super.lisener();
         if (this.preset) {
             this.game.menu1.menuInd = 1;
-            console.log('preset on 1 btn');
+            
         }
     }
 }
@@ -111,7 +111,7 @@ export class Btn2 extends Btn {
         super.lisener();
         if (this.preset) {
             this.game.menu1.menuInd = 2;
-            console.log('preset on 2 btn');
+            
         }
     }
 }
@@ -133,7 +133,7 @@ export class Btn3 extends Btn {
         super.lisener();
         if (this.preset) {
             this.game.menu1.menuInd = 3;
-            console.log('preset on 3 btn');
+            
         }
     }
 
@@ -166,7 +166,7 @@ export class BtnLeft extends Btn {
                 this.game.achiev.achieveInd = 9;
             }
             this.preset = false;
-            console.log('preset on lisf');
+
         }
     }
 
@@ -199,7 +199,7 @@ export class BtnRight extends Btn {
                 this.game.achiev.achieveInd = 0;
             }
             this.preset = false;
-            console.log('preset on right');
+            
 
         }
     }

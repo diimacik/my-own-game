@@ -86,6 +86,10 @@ export class IceBoss extends Enemy {
             this.speedX = -4;
                 
         }
+        if (this.lives == 0) {
+            this.game.AchScore[9] = true;
+            this.game.saveAchiev();
+        }
     }
     draw(context) {
         super.draw(context);
@@ -147,7 +151,7 @@ export class Bird extends Enemy{
         this.y = this.game.height / 2 - this.height;
         this.image = document.getElementById('bird');
         this.lives = 1;
-        this.speedX = 0;
+        this.speedX = 2.5;
         this.speedY = 0;
         this.minFrame = 0;
         this.maxFrame = 3;

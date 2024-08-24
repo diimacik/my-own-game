@@ -1,5 +1,6 @@
 import { GoningRight, GoningLeft, JumpRight, JumpLeft, FallRight, FallLeft } from "./playerStates.js";
 import { Ice } from "./particles.js";
+import { CollisionAnimation } from "./particles.js";
 
 export class Player {
     constructor(game) {
@@ -151,6 +152,8 @@ export class Player {
                     if (enemy.lives == 0) {
                         enemy.markedForDeletion = true;
                         this.game.kills++; 
+                        this.game.collisions.push(new CollisionAnimation(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
+                        this.game.achiev.checkKills();
                     }  
                     if (this.game.score.energy == 0) this.game.score.superPower = false;
                     else this.game.score.energy--;

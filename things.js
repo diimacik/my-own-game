@@ -82,7 +82,40 @@ export class Coins extends Things {
     getEfact() {
         this.game.score.coins++;
         this.game.saveAll();
+        if (this.game.score.coins >= 20) {
+            this.game.AchScore[0] = true;        
+        }
+        if (this.game.score.coins >= 200) {
+            this.game.AchScore[1] = true;    
+        }
+        if (this.game.score.coins >= 500) {
+            this.game.AchScore[2] = true;    
+        } 
+        if (this.game.score.coins >= 5000) {
+            this.game.AchScore[3] = true;
+        }         
+        this.game.saveAchiev();  
         //localStorage.setItem('this.score', JSON.stringify(this.score));
     }
 
+}
+export class Hearts extends Things {
+    constructor(game) {
+        super();
+        this.game = game;
+        this.width = 64;
+        this.height = 64;
+        this.x = this.game.width;
+        this.y = this.game.height - this.game.ground - this.height;
+        this.image = document.getElementById('getLive');
+
+        
+        this.speedX = -5.4;
+        this.speedY = 0;
+        this.maxFrame = 5;
+    }
+    getEfact() {
+        this.game.score.lives++;
+        this.game.saveAll();
+    }
 }

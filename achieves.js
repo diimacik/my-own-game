@@ -54,23 +54,41 @@ export class Achiev {
                 'buing is complite \n buy all \n the Skines',
                 'kill a IceBoss',
             ],
+            /*
             active:[
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-            ],
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+            ],*/
         }
         //this.textSplit = this.achiev.text.split('\n');
         //this.achievInd = 0;
         this.achieveInd = 0;
         this.sizeIcon = 65;
+    }
+    checkKills() {
+        if (this.game.kills >= 20) {
+            this.game.AchScore[4] = true;
+        }
+        if (this.game.kills >= 100) {
+            this.game.AchScore[5] = true;
+        }
+        if (this.game.kills >= 500) {
+            this.game.AchScore[6] = true;
+        }
+        
+    }
+    checkBuy() {
+        if (!this.game.score.selles) {
+            this.achiev[8] = true;
+        }
     }
     draw(context) {
         
@@ -96,7 +114,7 @@ export class Achiev {
             context.strokeStyle = 'white'
             context.rect(this.achievWindow.x + 15 + this.sizeIcon * this.achieveInd, this.achievWindow.y + this.sizeIcon / 2, this.sizeIcon , this.sizeIcon);
             context.stroke();
-            if (this.achiev.active[i]) {
+            if (this.game.AchScore[i]) {
                 context.drawImage(this.achiev.imageSmall[i], 0, 0, 60, 60, this.achievWindow.x * 2  + i * 65, this.achievWindow.y + this.sizeIcon / 2 + 5, 60, 60, 60)
 
             } else {
@@ -105,7 +123,7 @@ export class Achiev {
             }
 
         }
-        if (this.achiev.active[this.achieveInd]) {
+        if (this.game.AchScore[this.achieveInd]) {
             context.drawImage(this.achiev.imageBig[this.achieveInd], 0, 0, 180, 180, this.windows.x, this.windows.y, 180, 180, 180)
 
         } else {
@@ -122,13 +140,13 @@ export class Achiev {
             context.fillText(lines[i], this.windows.x + 180 , this.windows.y + 40 + (i * linerheight));
             context.restore();
         }
-        if (this.achiev.active[this.achieveInd]) {
+        if (this.game.AchScore[this.achieveInd]) {
             context.save();
             context.fillStyle = 'white'
             context.font = 30 + 'px ' + 'Pixelify Sans';
             context.fillText('Staus, you have', this.windows.x + 180 , this.windows.y + 200);
             context.restore();
-        } else if (!this.achiev.active[this.achieveInd]) {
+        } else if (!this.game.AchScore[this.achieveInd]) {
             context.save();
             context.fillStyle = 'white'
             context.font = 30 + 'px ' + 'Pixelify Sans';

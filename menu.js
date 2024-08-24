@@ -10,7 +10,7 @@ export class Menu1 {
         this.color = 'rgba(66, 110, 182, 0.8)';
         this.text = 'skin of player';
         this.menuInd = 1;
-        
+
         //this.stack = new Stack(this, 20, 50, this.width - 40, this.height * 0.4);
     }
     /*
@@ -153,8 +153,7 @@ export class Stack {
             ) {
                 
                 this.game.score.imageInd = 0;
-                
-                console.log('bumm');
+
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
                 this.touchMenuX <= this.devWidth * 2 &&
@@ -169,11 +168,13 @@ export class Stack {
                     this.game.score.selles[1] = false;
                     this.game.score.price[1] = 'own';
                     
+                    
                 }
              
                 else  if (!this.game.score.selles[1]){
-                    
                     this.game.score.imageInd = 1;
+                    this.game.AchScore[7] = true;
+                    this.game.saveAchiev();
                 }else {
                     this.game.score.imageInd = 0;
                 }
@@ -188,12 +189,14 @@ export class Stack {
                     this.game.score.imageInd = 2;
                     this.game.score.selles[2] = false;
                     this.game.score.price[2] = 'own';
-
+                    
                     
                 }
              
                 else  if (!this.game.score.selles[2]){
                     this.game.score.imageInd = 2;
+                    this.game.AchScore[7] = true;
+                    this.game.saveAchiev();
                 }else {
                     this.game.score.imageInd = 0;
                 }
@@ -207,15 +210,22 @@ export class Stack {
                     this.game.score.imageInd = 3;
                     this.game.score.selles[3] = false;
                     this.game.score.price[3] = 'own';
+                    
                 }         
                 else  if (!this.game.score.selles[3]){
                     this.game.score.imageInd = 3;
+                    this.game.AchScore[7] = true;
+                    this.game.saveAchiev();
                 }else {
                     this.game.score.imageInd = 0;
                 }
                 
             }
             this.game.saveAll();
+            if (this.game.score.price === 'free', 'own', 'own', 'own') {
+                this.game.AchScore[8] = true;
+                this.game.saveAchiev();
+            }
         });
 
         window.addEventListener('touchstart', e => {
@@ -248,6 +258,7 @@ export class Stack {
             ) {
                 this.game.score.imageInd = 3;
             }
+                        
         });    
     }
     

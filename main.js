@@ -3,7 +3,7 @@ import { Player } from "./player.js";
 import { InputHandler } from "./input.js";
 import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
-import { Cristal, Coins } from "./things.js";
+import { Cristal, Coins, Hearts } from "./things.js";
 import { Joystick } from "./joystick.js";
 import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight} from "./buttons.js";
 import { UserDevice } from "./detector.js";
@@ -43,6 +43,7 @@ window.addEventListener('load', function() {
                 new BtnLeft(this, 20, 230,  50, 250), 
                 new BtnRight(this, this.menu1.width - 70, 230, 50, 250),
             ]
+            this.collisions = [];
             this.enemies = [];
             this.things = [];
             this.particles = [];
@@ -69,6 +70,18 @@ window.addEventListener('load', function() {
                 superPower:false,
                 imageInd:0,
             }
+            this.AchScore = JSON.parse(localStorage.getItem('AchScore')) || [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+            ];
             //this.coins = this.score.coins;
             //this.lives = 10;
             
@@ -78,8 +91,9 @@ window.addEventListener('load', function() {
             
             this.userDev = new UserDevice(this);
             this.userDev.detector();
-            //this.joystick.listener();
+            
         }
+        
         update(deltaTime) {
             if (this.score === undefined) {
                 this.score = {
@@ -92,7 +106,20 @@ window.addEventListener('load', function() {
                     imageInd:0,
                 }
             }
-
+            if (this.AchScore === undefined) {
+                this.AchScore = [
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                ]
+            }
             if (!this.gamePuase) {
                 
                 this.background.update(deltaTime);
@@ -106,6 +133,9 @@ window.addEventListener('load', function() {
                 } else {
                     this.enemyTimer += deltaTime;
                 }
+                this.collisions.forEach(collision => {
+                    collision.update(deltaTime);
+                });
                 this.enemies.forEach(enemy => {
                     enemy.update(deltaTime);
                     if (!this.bossPusher) {
@@ -130,9 +160,11 @@ window.addEventListener('load', function() {
                 this.particles.forEach(particle => {
                     particle.update();
                 });
+                
                 if (this.particles.length > this.maxParticles) {
                     this.particles.length = this.maxParticles;
                 }
+                this.collisions = this.collisions.filter(collision => !collision.markedForDeletion);
                 this.particles = this.particles.filter(particle => !particle.markedForDeletion);
                 this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
                 this.things = this.things.filter(thing => !thing.markedForDeletion);
@@ -166,6 +198,9 @@ window.addEventListener('load', function() {
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             })
+            this.collisions.forEach(collision => {
+                collision.draw(context);
+            });
             this.UI.draw(context);
             
             if (!this.userDev.leptop || this.debug) {
@@ -227,17 +262,22 @@ window.addEventListener('load', function() {
             
         }
         addThins() {
-            if (Math.random() < 0.9) this.things.push(new Coins(this));
-            else this.things.push(new Cristal(this));
+            if (Math.random() < 0.75) this.things.push(new Coins(this));
+            else if (Math.random() > 0.75) this.things.push(new Cristal(this));
+            else if (Math.random() > 0.97 && this.score.lives < 10) this.things.push(new Hearts(this));
+            
         } 
         saveAll() {
             localStorage.setItem('score', JSON.stringify(this.score));
 
         }
+        saveAchiev() {
+            localStorage.setItem('AchScore', JSON.stringify(this.AchScore));
+        }
         restartGame() {
             //this.player.restart();
             this.background.restart();
-            this.lives = 10;
+            this.score.lives = 10;
             this.energy = 0;
             this.kills = 0;
             this.coins = 0;
