@@ -205,3 +205,37 @@ export class BtnRight extends Btn {
     }
 
 }
+
+// Btn For Settings
+export class BtnSound extends Btn {
+    constructor(game, x, y, width, height) {
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.color = 'rgba(255, 255, 255, 1)';
+        this.musicOnImg = document.getElementById('music-on');
+        this.musicOffImg = document.getElementById('music-off');
+    }
+    draw(context) {
+        super.draw(context);
+        if (this.game.music.play) {
+            context.drawImage(this.musicOnImg, this.x, this.y, this.width, this.height);
+        } else {
+            context.drawImage(this.musicOffImg, this.x, this.y, this.width, this.height);
+        }
+    }
+    lisener() {
+        super.lisener();
+        if (this.preset) {
+            if (this.game.music.play) {
+                this.game.music.play = false;
+            } else {
+                this.game.music.play = true;
+            }
+        }
+        this.preset = false;
+    }
+}

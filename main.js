@@ -5,10 +5,11 @@ import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
 import { Cristal, Coins, Hearts } from "./things.js";
 import { Joystick } from "./joystick.js";
-import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight} from "./buttons.js";
+import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight, BtnSound} from "./buttons.js";
 import { UserDevice } from "./detector.js";
 import { Menu1, Stack} from "./menu.js";
 import { Achiev } from "./achieves.js";
+import { Music } from "./sounds.js";
 
 
 window.addEventListener('load', function() {
@@ -43,6 +44,8 @@ window.addEventListener('load', function() {
                 new BtnLeft(this, 20, 230,  50, 250), 
                 new BtnRight(this, this.menu1.width - 70, 230, 50, 250),
             ]
+            this.settingBtn = new BtnSound(this, 20, 20, 50, 50)
+            
             this.collisions = [];
             this.enemies = [];
             this.things = [];
@@ -57,7 +60,7 @@ window.addEventListener('load', function() {
             this.debug = false;
             this.gameOver = false;
             this.gamePuase = true;
-            
+            this.music = new Music(this);
             
             this.stack = new Stack(this, 20, 50, this.menu1.width - 40, this.height * 0.4);
             this.achiev = new Achiev(this);
@@ -95,6 +98,7 @@ window.addEventListener('load', function() {
         }
         
         update(deltaTime) {
+            this.music.update();
             if (this.score === undefined) {
                 this.score = {
                     coins:0,
@@ -121,6 +125,7 @@ window.addEventListener('load', function() {
                 ]
             }
             if (!this.gamePuase) {
+                //this.music.play = true;
                 
                 this.background.update(deltaTime);
                 this.player.update(this.input.keys, this.joystick.keys, deltaTime, this.enemies, this.things);
@@ -170,6 +175,7 @@ window.addEventListener('load', function() {
                 this.things = this.things.filter(thing => !thing.markedForDeletion);
             }
             else if (this.gamePuase) {
+                //this.music.play = false;
                 //this.menu1.update(this.player, this.userDev.indexX, this.userDev.indexY, this.coins);
                 this.stack.lisener(this.player, this.userDev.indexX, this.userDev.indexY)
                 for (let i = 0; i < this.btn1.length; i++) {
@@ -179,6 +185,9 @@ window.addEventListener('load', function() {
                     
                     this.achievBtn[0].lisener();
                     this.achievBtn[1].lisener();
+                }
+                if (this.gamePuase && this.menu1.menuInd === 3) {
+                    this.settingBtn.lisener();
                 }
             }  
         }
@@ -234,7 +243,7 @@ window.addEventListener('load', function() {
                     //this.stack.draw(context);
                 }
                 else if (this.menu1.menuInd === 3) {
-                    //this.stack.draw(context);
+                    this.settingBtn.draw(context);
                 }
             }
             
