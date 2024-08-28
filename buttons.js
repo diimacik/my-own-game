@@ -71,6 +71,31 @@ class Btn {
             this.preset = false;
             
         });
+        addEventListener('touchstart', e => {
+            this.touchX = e.targetTouches[0].pageX;
+            this.touchY = e.targetTouches[0].pageY;
+            if (document.fullscreenElement) {
+                this.touchX = e.targetTouches[0].pageX / this.game.userDev.indexX
+                this.touchY = e.targetTouches[0].pageY / this.game.userDev.indexY
+                //console.log(this.touchX, this.touchY);
+            }
+            else if (!document.fullscreenElement) {
+                let rect = e.target.getBoundingClientRect();
+                this.touchX = e.targetTouches[0].pageX - rect.left;
+                this.touchY = e.targetTouches[0].pageY - rect.top;
+            }
+            if (this.touchX >= this.x && this.touchX <= this.x + this.width &&
+                this.touchY >= this.y && this.touchY <= this.y + this.height
+            ){
+                
+                this.preset = true;
+                this.game.music.pressBtnSound();
+            }
+            
+        })
+        addEventListener('touchend', () => {
+            this.preset = false;
+        })
     }
 }
 

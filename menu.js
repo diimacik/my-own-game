@@ -67,6 +67,7 @@ export class Stack {
         this.touchMenuX = '';
         this.menuResponse = true;
         
+        this.touchScreen = false;
         this.windows = {
             x: 20,
             y: 280,
@@ -230,18 +231,114 @@ export class Stack {
                 this.game.saveAchiev();
             }
         });
-
+        
         window.addEventListener('touchstart', e => {
-            this.touchMenuX = e.changedTouches[0].pageX / indexX;
-            this.touchMenuY = e.changedTouches[0].pageY / indexY;
+            this.menuResponse = true;
+            
+            if (document.fullscreenElement) {
+                this.touchMenuX = e.changedTouches[0].pageX / indexX;
+                this.touchMenuY = e.changedTouches[0].pageY / indexY;
+                //console.log(e);
+                //console.log(this.touchMenuX, indexX, this.touchMenuY, 'height '+ this.height, 'width ' + this.devWidth);
+            }else if (!document.fullscreenElement) {
+                let rect = e.target.getBoundingClientRect();
+                this.touchMenuX = e.changedTouches[0].pageX - rect.left;
+                this.touchMenuY = e.changedTouches[0].pageY - rect.top;
+                
+                //console.log(e);
+                //console.log(this.touchMenuX, indexX, this.touchMenuY, '!height '+ this.height, '!width ' + this.devWidth);
+            }
+            
+            if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
+                this.touchMenuX <= this.devWidth &&
+                this.menuResponse
+            ) {
+                
+                this.game.score.imageInd = 0;
+                this.game.music.pressBtnSound();
+            }
+            else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
+                this.touchMenuX <= this.devWidth * 2 &&
+                this.menuResponse    
+            ) {
+                this.game.music.pressBtnSound();
+                if (this.game.score.selles[1] && this.game.score.coins >= this.game.score.price[1]) {
+                    this.game.score.coins -= this.game.score.price[1];
+                    
 
+                    
+                    this.game.score.imageInd = this.skinID;
+                    this.game.score.selles[1] = false;
+                    this.game.score.price[1] = 'own';
+                    
+                    
+                }
+             
+                else  if (!this.game.score.selles[1]){
+                    this.game.score.imageInd = 1;
+                    this.game.AchScore[7] = true;
+                    this.game.saveAchiev();
+                }else {
+                    this.game.score.imageInd = 0;
+                }
+                   
+            }
+            else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
+                this.touchMenuX <= this.devWidth * 3 &&
+                this.menuResponse
+            ) {
+                this.game.music.pressBtnSound();
+                if (this.game.score.selles[2] && this.game.score.coins >= this.game.score.price[2]) {
+                    this.game.score.coins -= this.game.score.price[2];
+                    this.game.score.imageInd = 2;
+                    this.game.score.selles[2] = false;
+                    this.game.score.price[2] = 'own';
+                    
+                    
+                }
+             
+                else  if (!this.game.score.selles[2]){
+                    this.game.score.imageInd = 2;
+                    this.game.AchScore[7] = true;
+                    this.game.saveAchiev();
+                }else {
+                    this.game.score.imageInd = 0;
+                }
+            }
+            else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height &&
+                this.touchMenuX <= this.devWidth * 4 && 
+                this.menuResponse
+            ) {
+                this.game.music.pressBtnSound();
+                if (this.game.score.selles[3] && this.game.score.coins >= this.game.score.price[3]) {
+                    this.game.score.coins -= this.game.score.price[3];
+                    this.game.score.imageInd = 3;
+                    this.game.score.selles[3] = false;
+                    this.game.score.price[3] = 'own';
+                    
+                }         
+                else  if (!this.game.score.selles[3]){
+                    this.game.score.imageInd = 3;
+                    this.game.AchScore[7] = true;
+                    this.game.saveAchiev();
+                }else {
+                    this.game.score.imageInd = 0;
+                }
+                
+            }
+            this.game.saveAll();
+            if (this.game.score.price === 'free', 'own', 'own', 'own') {
+                this.game.AchScore[8] = true;
+                this.game.saveAchiev();
+            }
+            /*
             if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
                 this.touchMenuX <= this.devWidth &&
                 this.menuResponse
             ) {
                 this.game.score.imageInd = 0;
                 
-                console.log('bumm');
+                console.log(this.touchMenuX, this.touchMenuY,'height ' + this.height,'width ' + this.devWidth);
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
                 this.touchMenuX <= this.devWidth * 2 &&
@@ -261,8 +358,12 @@ export class Stack {
             ) {
                 this.game.score.imageInd = 3;
             }
-                        
-        });    
+            */            
+        }); 
+        addEventListener('touchend', () => {
+            this.menuResponse = false;
+        });
+
     }
     
 }

@@ -178,7 +178,7 @@ window.addEventListener('load', function() {
             else if (this.gamePuase) {
                 //this.music.play = false;
                 //this.menu1.update(this.player, this.userDev.indexX, this.userDev.indexY, this.coins);
-                this.stack.lisener(this.player, this.userDev.indexX, this.userDev.indexY)
+                this.stack.lisener(this.userDev.indexX, this.userDev.indexY);
                 for (let i = 0; i < this.btn1.length; i++) {
                     this.btn1[i].lisener();
                 }
