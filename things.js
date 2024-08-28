@@ -56,6 +56,7 @@ export class Cristal extends Things {
         this.maxFrame = 5;
     }
     getEfact() {
+        this.game.music.energyPlay();
         if (!this.game.score.superPower) {
             this.game.score.superPower = true;
             this.game.score.energy += 10;
@@ -80,6 +81,7 @@ export class Coins extends Things {
         this.maxFrame = 3;
     }
     getEfact() {
+        this.game.music.coinsPlay();
         this.game.score.coins++;
         this.game.saveAll();
         if (this.game.score.coins >= 20) {
@@ -115,6 +117,7 @@ export class Hearts extends Things {
         this.maxFrame = 5;
     }
     getEfact() {
+        this.game.music.heartPlay();
         this.game.score.lives++;
         this.game.saveAll();
     }

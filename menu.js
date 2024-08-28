@@ -153,12 +153,13 @@ export class Stack {
             ) {
                 
                 this.game.score.imageInd = 0;
-
+                this.game.music.pressBtnSound();
             }
             else if (this.touchMenuY >= this.y && this.touchMenuY <= this.height && 
                 this.touchMenuX <= this.devWidth * 2 &&
                 this.menuResponse    
             ) {
+                this.game.music.pressBtnSound();
                 if (this.game.score.selles[1] && this.game.score.coins >= this.game.score.price[1]) {
                     this.game.score.coins -= this.game.score.price[1];
                     
@@ -184,6 +185,7 @@ export class Stack {
                 this.touchMenuX <= this.devWidth * 3 &&
                 this.menuResponse
             ) {
+                this.game.music.pressBtnSound();
                 if (this.game.score.selles[2] && this.game.score.coins >= this.game.score.price[2]) {
                     this.game.score.coins -= this.game.score.price[2];
                     this.game.score.imageInd = 2;
@@ -205,6 +207,7 @@ export class Stack {
                 this.touchMenuX <= this.devWidth * 4 && 
                 this.menuResponse
             ) {
+                this.game.music.pressBtnSound();
                 if (this.game.score.selles[3] && this.game.score.coins >= this.game.score.price[3]) {
                     this.game.score.coins -= this.game.score.price[3];
                     this.game.score.imageInd = 3;

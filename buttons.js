@@ -60,13 +60,16 @@ class Btn {
             if (this.touchX >= this.x && this.touchX <= this.x + this.width &&
                 this.touchY >= this.y && this.touchY <= this.y + this.height
             ){
-                this.preset = true;
                 
+                this.preset = true;
+                this.game.music.pressBtnSound();
             }
-            //this.preset = false;
+            
         });
         addEventListener('mouseup', () => {
+            
             this.preset = false;
+            
         });
     }
 }

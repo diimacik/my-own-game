@@ -140,6 +140,7 @@ window.addEventListener('load', function() {
                 }
                 this.collisions.forEach(collision => {
                     collision.update(deltaTime);
+                    this.music.enemyBoom();
                 });
                 this.enemies.forEach(enemy => {
                     enemy.update(deltaTime);

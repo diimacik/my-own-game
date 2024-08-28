@@ -136,7 +136,12 @@ export class Player {
                 if (!this.game.score.superPower && this.damage) {
                     if (this.damageTimer > this.damageInterval) {
                         this.game.score.lives--;
+                        
                         this.damage = false;
+                        
+                        if (this.game.music.play) {
+                            this.game.music.damagePlay();
+                        }
                         this.damageTimer = 0;
                     }
                     else {
@@ -153,6 +158,8 @@ export class Player {
                         enemy.markedForDeletion = true;
                         this.game.kills++; 
                         this.game.collisions.push(new CollisionAnimation(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
+                        //this.game.music.boomPlay = true;
+                        
                         this.game.achiev.checkKills();
                     }  
                     if (this.game.score.energy == 0) this.game.score.superPower = false;
