@@ -37,6 +37,8 @@ export class Joystick {
         this.ondrag = false;
         this.keys = [];
         this.touchPos = new Vector2(0, 0);
+        this.tX = '';
+        this.tY = '';
         this.fps = 30;
         this.jostickTimer = 0;
         this.jostickInterval = 1000/this.fps;
@@ -44,7 +46,17 @@ export class Joystick {
     }
     listener() {
         addEventListener('touchstart', e => {
-            this.touchPos = new Vector2(e.touches[0].pageX / this.game.userDev.indexX, e.touches[0].pageY / this.game.userDev.indexY);
+            const rect = e.target.getBoundingClientRect();
+            if (document.fullscreenElement) {
+                this.tX = e.touches[0].pageX / this.game.userDev.indexX;
+                this.tY = e.touches[0].pageY / this.game.userDev.indexY;
+            }
+            else if (!document.fullscreenElement) {
+
+                this.tX = e.touches[0].pageX - rect.left;
+                this.tY = e.touches[0].pageY - rect.top;
+            }
+            this.touchPos = new Vector2(this.tX, this.tY);
             if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
         })
         addEventListener('touchend', () => {
