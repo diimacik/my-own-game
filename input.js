@@ -22,6 +22,14 @@ export class InputHandler {
             else if (e.key === 'Enter' && this.game.gameOver) {
                 this.game.restartGame();
             }
+            // For laguages
+            else if (e.key === '1') {
+                this.game.languageId = 1;
+            }
+            else if (e.key === '0') {
+                this.game.languageId = 0;
+            }
+            console.log(this.game.languageId, this.game.languageSet)
         });
         window.addEventListener('keyup', e => {
             if (    e.key === 'ArrowUp'||

@@ -14,6 +14,7 @@ export class Achiev {
             height:250,
         }
         this.notAchievImg = [document.getElementById('dontHave-small'), document.getElementById('dontHave-big')];
+        //this.languageId = 0;
         this.achiev = {
             imageSmall:[
                 document.getElementById('firstCoins-small'),
@@ -39,21 +40,8 @@ export class Achiev {
                 document.getElementById('buy2-big'),
                 document.getElementById('killBoss1-big'),
             ],
-            text:[
-                // Coins
-                'first Coins \n you mast to have \n more 20 Coins',
-                'moer rich have \n  more than \n 200 coins',
-                'very rich have \n  more 500 coins',
-                'super rich have\n  more 5000 coins',
-                // Kill 
-                'first blood, \n kill  more 20 \n enemy',
-                'a small killer, \n kill more 100',
-                'a grazy killer, \n kill more 500',
-                // Skin 
-                'first buy, \n buy  a first Skin',
-                'buing is complite \n buy all \n the Skines',
-                'kill a IceBoss',
-            ],
+            
+            //text:this.game.languageSet[this.languageId].achieveText,
             /*
             active:[
                 false,
@@ -130,7 +118,7 @@ export class Achiev {
             context.drawImage(this.notAchievImg[1], 0, 0, 180, 180, this.windows.x, this.windows.y , 180, 180, 180)
 
         }
-        let text  = this.achiev.text[this.achieveInd];
+        let text  = this.game.languageSet[this.game.languageId].achieveText[this.achieveInd];
         let linerheight = 40;
         let lines = text.split('\n');
         for (let i = 0; i < lines.length; i++) {

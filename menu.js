@@ -74,7 +74,8 @@ export class Stack {
             width:this.game.menu1.width - 40,
             height:200,
         }
-        this.text = ["It's first skin in this Game", 'More energy', 'More hearts', 'Just tegnoligy save hem']
+        
+        //this.text = this.game.languageSet[this.game.languageId].skinText;
     }
     
     draw(context) {
@@ -132,7 +133,7 @@ export class Stack {
         context.save();
         context.fillStyle = 'white'
         context.font = 40 + 'px ' + 'Pixelify Sans';
-        context.fillText(this.text[this.game.score.imageInd], this.windows.x + 45, this.windows.y + 100);
+        context.fillText(this.game.languageSet[this.game.languageId].skinText[this.game.score.imageInd], this.windows.x + 45, this.windows.y + 100);
         context.restore();
     }
     lisener(indexX, indexY) {

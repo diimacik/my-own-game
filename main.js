@@ -5,11 +5,12 @@ import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
 import { Cristal, Coins, Hearts } from "./things.js";
 import { Joystick } from "./joystick.js";
-import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight, BtnSound} from "./buttons.js";
+import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight, BtnSound, BtnLanguage} from "./buttons.js";
 import { UserDevice } from "./detector.js";
 import { Menu1, Stack} from "./menu.js";
 import { Achiev } from "./achieves.js";
 import { Music } from "./sounds.js";
+import { languageEn, languageUa, laguageDe } from "./languages.js";
 
 
 window.addEventListener('load', function() {
@@ -28,6 +29,13 @@ window.addEventListener('load', function() {
             this.ground = 55;
             this.speed = 0;
             this.maxSpeed = 10;
+            this.languageId = 0;
+            this.languageSet = [
+                new languageEn(this),
+                new languageUa(this),
+                new laguageDe(this),
+            ];
+            this.languageId = 0;
             this.background = new Backgound(this);
             this.player = new Player(this);
             this.input = new InputHandler(this);
@@ -35,16 +43,19 @@ window.addEventListener('load', function() {
             this.joystick = new Joystick(this, this.width * 0.16, this.height * 0.6, 75, 25);
             this.btnPause = new btnPause(this, this.width * 0.9, this.height * 0.1)
             this.btn1 = [
-                new Btn1(this, this.width * 0.9 - 50, this.height * 0.3, 120, 50), 
-                new Btn2(this, this.width * 0.9 - 50, this.height * 0.5, 120, 50), 
-                new Btn3(this, this.width * 0.9 - 50, this.height * 0.7, 120, 50),
+                new Btn1(this, this.width * 0.9 - 80, this.height * 0.3, 160, 50), 
+                new Btn2(this, this.width * 0.9 - 80, this.height * 0.5, 160, 50), 
+                new Btn3(this, this.width * 0.9 - 80, this.height * 0.7, 160, 50),
             ]
             this.menu1 = new Menu1(this);
             this.achievBtn = [
                 new BtnLeft(this, 20, 230,  50, 250), 
                 new BtnRight(this, this.menu1.width - 70, 230, 50, 250),
             ]
-            this.settingBtn = new BtnSound(this, 20, 20, 50, 50)
+            this.settingBtn = [
+                new BtnSound(this, 20, 20, 50, 50),
+                new BtnLanguage(this, 120, 20, 180, 50),
+            ]
             
             this.collisions = [];
             this.enemies = [];
@@ -188,7 +199,8 @@ window.addEventListener('load', function() {
                     this.achievBtn[1].lisener();
                 }
                 if (this.gamePuase && this.menu1.menuInd === 3) {
-                    this.settingBtn.lisener();
+                    this.settingBtn[0].lisener();
+                    this.settingBtn[1].lisener();
                 }
             }  
         }
@@ -244,7 +256,8 @@ window.addEventListener('load', function() {
                     //this.stack.draw(context);
                 }
                 else if (this.menu1.menuInd === 3) {
-                    this.settingBtn.draw(context);
+                    this.settingBtn[0].draw(context);
+                    this.settingBtn[1].draw(context);
                 }
             }
             

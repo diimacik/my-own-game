@@ -43,7 +43,7 @@ class Btn {
             context.save();
             context.fillStyle = 'white';
             context.font = 25 + 'px ' + 'Pixelify Sans';
-            context.fillText(this.text, this.x + 10, this.y + this.height - 15);
+            context.fillText(this.game.languageSet[this.game.languageId].btnText[this.id], this.x + 10, this.y + this.height - 15);
             context.restore();
         }
         
@@ -108,7 +108,8 @@ export class Btn1 extends Btn {
         this.width = width;
         this.height = heigth;
         this.color = 'rgba(0, 0, 0, 1)';
-        this.text = 'skin';
+        this.id = 0;
+        this.text = true;
     }
     draw(context) {
         super.draw(context);
@@ -129,8 +130,9 @@ export class Btn2 extends Btn {
         this.y = y;
         this.width = width;
         this.height = heigth;
+        this.id = 1;
         this.color = 'rgba(0, 0, 0, 1)';
-        this.text = 'achieves';
+        this.text = true;
     }
     draw(context) {
         super.draw(context);
@@ -152,7 +154,8 @@ export class Btn3 extends Btn {
         this.width = width;
         this.height = heigth;
         this.color = 'rgba(0, 0, 0, 1)';
-        this.text = 'setting';
+        this.id = 2;
+        this.text = true;
     }
     draw(context) {
         super.draw(context);
@@ -263,6 +266,41 @@ export class BtnSound extends Btn {
             } else {
                 this.game.music.play = true;
             }
+        }
+        this.preset = false;
+    }
+}
+export class BtnLanguage extends Btn {
+    constructor(game, x, y, width, height) {
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.color = 'rgba(0, 0, 0, 1)';
+    
+    }
+    draw(context) {
+        super.draw(context);
+        context.save();
+            context.fillStyle = 'white';
+            context.font = 25 + 'px ' + 'Pixelify Sans';
+            context.fillText(this.game.languageSet[this.game.languageId].name, this.x + 10, this.y + this.height - 15);
+            context.restore();
+    }
+    lisener() {
+        super.lisener();
+        if (this.preset) {
+            if (this.game.languageId >= this.game.languageSet.length -1) {
+                this.game.languageId = 0;
+                
+            } else {
+                this.game.languageId++;
+            }
+            
+            console.log(this.game.languageId);
+            
         }
         this.preset = false;
     }
