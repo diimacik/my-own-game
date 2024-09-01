@@ -3,10 +3,12 @@ export class languageEn {
         this.game = game;
         this.name = 'English';
         this.image = document.getElementById('english');
+        this.beforDelete = 'You are shure that delete \n the progress in this game?';
         this.btnText = [
             'skin',
             'achieves',
             'settings',
+            'delete all',
         ];
         this.displayText = [
             'Coins: ',
@@ -46,10 +48,12 @@ export class languageUa {
         this.game = game;
         this.name = 'Україська';
         this.image = document.getElementById('ukrainen');
+        this.beforDelete = 'Ви впевнені, що видалите \n прогрес у цій грі?';
         this.btnText = [
             'скини',
             'досягнення',
             'налаштування',
+            'видалити все',
         ];
         this.displayText = [
             'Монети: ',
@@ -89,10 +93,13 @@ export class laguageDe {
         this.game = game;
         this.name = 'Deutch';
         this.image = document.getElementById('german');
+        this.beforDelete = 'Sind Sie sicher, dass Sie den \n Fortschritt in diesem Spiel löschen?';
         this.btnText = [
             'skinen',
             'erreicht',
             'einstellugen',
+            'alles löschen',
+            
         ];
         this.displayText = [
             'Münzen: ',
@@ -132,10 +139,12 @@ export class languageEs {
         this.game = game;
         this.name = 'español';
         this.image = document.getElementById('spanish');
+        this.beforDelete = '¿Estás seguro de que estás \n completando el progreso en este juego?';
         this.btnText = [
             'skin',
             'logra',
             'ajustes',
+            'borrar todo',
         ];
         this.displayText = [
             'Monedas: ',

@@ -5,7 +5,7 @@ import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
 import { Cristal, Coins, Hearts } from "./things.js";
 import { Joystick } from "./joystick.js";
-import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight, BtnSound, BtnLanguage, BtnScreen} from "./buttons.js";
+import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight, BtnSound, BtnLanguage, BtnScreen, BtnReset} from "./buttons.js";
 import { UserDevice } from "./detector.js";
 import { Menu1, Stack} from "./menu.js";
 import { Achiev } from "./achieves.js";
@@ -29,14 +29,13 @@ window.addEventListener('load', function() {
             this.ground = 55;
             this.speed = 0;
             this.maxSpeed = 10;
-            this.languageId = 0;
+            this.languageId = JSON.parse(localStorage.getItem('languageId')) || 0;
             this.languageSet = [
                 new languageEn(this),
                 new languageUa(this),
                 new laguageDe(this),
                 new languageEs(this),
             ];
-            this.languageId = 0;
             this.background = new Backgound(this);
             this.player = new Player(this);
             this.input = new InputHandler(this);
@@ -57,6 +56,7 @@ window.addEventListener('load', function() {
                 new BtnSound(this, 20, 20, 50, 50),
                 new BtnLanguage(this, 120, 20, 200, 50),
                 new BtnScreen(this, 20, 120, 50, 50),
+                new BtnReset(this, 120, 120, 200, 50)
             ]
             
             this.collisions = [];
@@ -77,6 +77,7 @@ window.addEventListener('load', function() {
             
             this.stack = new Stack(this, 20, 50, this.menu1.width - 40, this.height * 0.4);
             this.achiev = new Achiev(this);
+
             this.score = JSON.parse(localStorage.getItem('score')) || {
                 coins:0,
                 selles:[false, true, true, true],
@@ -136,6 +137,9 @@ window.addEventListener('load', function() {
                     false,
                     false,
                 ]
+            }
+            if (this.languageId === undefined) {
+                this.languageId = 0;
             }
             if (!this.gamePuase) {
                 //this.music.play = true;
@@ -204,6 +208,7 @@ window.addEventListener('load', function() {
                     this.settingBtn[0].lisener();
                     this.settingBtn[1].lisener();
                     this.settingBtn[2].lisener(canvas);
+                    this.settingBtn[3].lisener();
 
                 }
             }  
@@ -263,7 +268,7 @@ window.addEventListener('load', function() {
                     this.settingBtn[0].draw(context);
                     this.settingBtn[1].draw(context);
                     this.settingBtn[2].draw(context);
-
+                    this.settingBtn[3].draw(context);
                 }
             }
             
@@ -302,6 +307,9 @@ window.addEventListener('load', function() {
         }
         saveAchiev() {
             localStorage.setItem('AchScore', JSON.stringify(this.AchScore));
+        }
+        saveLanguage() {
+            localStorage.setItem('languageId', JSON.stringify(this.languageId));
         }
         restartGame() {
             //this.player.restart();
@@ -345,12 +353,7 @@ window.addEventListener('load', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game.update(deltaTime, canvas);
         game.draw(ctx);
-        
-
         if (!game.gameOver) requestAnimationFrame(animate);
-        
-
-
     }
     animate(0);
 

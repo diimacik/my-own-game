@@ -171,12 +171,12 @@ export class Stack {
                     this.game.score.selles[1] = false;
                     this.game.score.price[1] = 'own';
                     
-                    
+                    this.game.AchScore[7] = true;
                 }
              
                 else  if (!this.game.score.selles[1]){
                     this.game.score.imageInd = 1;
-                    this.game.AchScore[7] = true;
+                    
                     this.game.saveAchiev();
                 }else {
                     this.game.score.imageInd = 0;
@@ -193,13 +193,13 @@ export class Stack {
                     this.game.score.imageInd = 2;
                     this.game.score.selles[2] = false;
                     this.game.score.price[2] = 'own';
-                    
+                    this.game.AchScore[7] = true;
                     
                 }
              
                 else  if (!this.game.score.selles[2]){
                     this.game.score.imageInd = 2;
-                    this.game.AchScore[7] = true;
+                    
                     this.game.saveAchiev();
                 }else {
                     this.game.score.imageInd = 0;
@@ -215,11 +215,11 @@ export class Stack {
                     this.game.score.imageInd = 3;
                     this.game.score.selles[3] = false;
                     this.game.score.price[3] = 'own';
-                    
+                    this.game.AchScore[7] = true;
                 }         
                 else  if (!this.game.score.selles[3]){
                     this.game.score.imageInd = 3;
-                    this.game.AchScore[7] = true;
+                    
                     this.game.saveAchiev();
                 }else {
                     this.game.score.imageInd = 0;

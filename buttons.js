@@ -295,10 +295,12 @@ export class BtnLanguage extends Btn {
         if (this.preset) {
             if (this.game.languageId >= this.game.languageSet.length -1) {
                 this.game.languageId = 0;
-                
+                this.game.saveLanguage();
             } else {
                 this.game.languageId++;
+                this.game.saveLanguage();
             }
+            
         }
         this.preset = false;
     }
@@ -342,5 +344,56 @@ export class BtnScreen extends Btn {
             
         }
         
+    }
+}
+
+export class BtnReset extends Btn {
+    constructor(game, x, y, width, height) {
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.color = 'rgba(0, 0, 0, 1)';
+        this.id = 3;
+        this.text = true;
+    }
+    draw(context) {
+        super.draw(context);
+    }
+    lisener() {
+        super.lisener();
+        if (this.preset) {
+            this.resetAll();
+        }
+        this.preset = false;
+    }
+    resetAll() {
+        if (confirm(this.game.languageSet[this.game.languageId].beforDelete)) {
+                this.game.score = {
+                coins:0,
+                selles:[false, true, true, true],
+                price:['free', 100, 200, 500],
+                lives:10,
+                energy:0,
+                superPower:false,
+                imageInd:0,
+            }
+            this.game.AchScore = [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+            ]
+            this.game.saveAll();
+            this.game.saveAchiev();
+        }
     }
 }
