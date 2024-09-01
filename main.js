@@ -5,7 +5,7 @@ import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
 import { Cristal, Coins, Hearts } from "./things.js";
 import { Joystick } from "./joystick.js";
-import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight, BtnSound, BtnLanguage} from "./buttons.js";
+import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight, BtnSound, BtnLanguage, BtnScreen} from "./buttons.js";
 import { UserDevice } from "./detector.js";
 import { Menu1, Stack} from "./menu.js";
 import { Achiev } from "./achieves.js";
@@ -56,6 +56,7 @@ window.addEventListener('load', function() {
             this.settingBtn = [
                 new BtnSound(this, 20, 20, 50, 50),
                 new BtnLanguage(this, 120, 20, 200, 50),
+                new BtnScreen(this, 20, 120, 50, 50),
             ]
             
             this.collisions = [];
@@ -202,6 +203,8 @@ window.addEventListener('load', function() {
                 if (this.gamePuase && this.menu1.menuInd === 3) {
                     this.settingBtn[0].lisener();
                     this.settingBtn[1].lisener();
+                    this.settingBtn[2].lisener(canvas);
+
                 }
             }  
         }
@@ -259,6 +262,8 @@ window.addEventListener('load', function() {
                 else if (this.menu1.menuInd === 3) {
                     this.settingBtn[0].draw(context);
                     this.settingBtn[1].draw(context);
+                    this.settingBtn[2].draw(context);
+
                 }
             }
             
@@ -331,27 +336,14 @@ window.addEventListener('load', function() {
 
     const game = new Game(canvas.width, canvas.height);
     let lastTime = 0;
-    function toggleFullScreen(){
-        if (!document.fullscreenElement) {
-            canvas.requestFullscreen().catch(err => {
-                alert(`Error, can't enable full-screen mode: ${err.message}`);
-            });
-        }else {
-            document.exitFullscreen();
-            
-        }
-        
-    }
 
-    
-    fullScreenButton.addEventListener('click', toggleFullScreen)
     console.log(game.userDev.screenWidth, game.userDev.screenHeight, game.userDev.indexX, game.userDev.indexY);
 
     function animate(timeStapm) {
         const deltaTime = timeStapm - lastTime;
         lastTime = timeStapm;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        game.update(deltaTime);
+        game.update(deltaTime, canvas);
         game.draw(ctx);
         
 
