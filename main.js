@@ -10,7 +10,7 @@ import { UserDevice } from "./detector.js";
 import { Menu1, Stack} from "./menu.js";
 import { Achiev } from "./achieves.js";
 import { Music } from "./sounds.js";
-import { languageEn, languageUa, laguageDe } from "./languages.js";
+import { languageEn, languageUa, laguageDe, languageEs } from "./languages.js";
 
 
 window.addEventListener('load', function() {
@@ -34,6 +34,7 @@ window.addEventListener('load', function() {
                 new languageEn(this),
                 new languageUa(this),
                 new laguageDe(this),
+                new languageEs(this),
             ];
             this.languageId = 0;
             this.background = new Backgound(this);
@@ -54,7 +55,7 @@ window.addEventListener('load', function() {
             ]
             this.settingBtn = [
                 new BtnSound(this, 20, 20, 50, 50),
-                new BtnLanguage(this, 120, 20, 180, 50),
+                new BtnLanguage(this, 120, 20, 200, 50),
             ]
             
             this.collisions = [];

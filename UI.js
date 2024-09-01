@@ -10,9 +10,9 @@ export class UI {
         context.save();
         context.font = this.fontSize + 'px ' + this.fontFamily;
         // coins
-        context.fillText('Coins ' + this.game.score.coins, 20, 50);
+        context.fillText(this.game.languageSet[this.game.languageId].displayText[0] + this.game.score.coins, 20, 50);
         // kills
-        context.fillText('Kills ' + this.game.kills, 20, 80);
+        context.fillText(this.game.languageSet[this.game.languageId].displayText[1] + this.game.kills, 20, 80);
         // lives
         for (let i = 0; i < this.game.score.lives; i++) {
             context.drawImage(this.livesImage, 30 * i + 20, 95, 25, 25);
@@ -22,7 +22,7 @@ export class UI {
             context.drawImage(this.energyImage, 30 * i + 20, 100, 25, 25);
         }
         if (this.game.gameOver) {
-            let text = 'Game Over, press \n Enter or swipe down \n to restart this game';
+            let text = this.game.languageSet[this.game.languageId].displayText[2];
             let x = this.game.width / 2;
             let y = 150;
             let linehieght = 40;

@@ -283,10 +283,11 @@ export class BtnLanguage extends Btn {
     }
     draw(context) {
         super.draw(context);
+        context.drawImage(this.game.languageSet[this.game.languageId].image, this.x + 10, this.y + 10, 32, 32);
         context.save();
             context.fillStyle = 'white';
             context.font = 25 + 'px ' + 'Pixelify Sans';
-            context.fillText(this.game.languageSet[this.game.languageId].name, this.x + 10, this.y + this.height - 15);
+            context.fillText(this.game.languageSet[this.game.languageId].name, this.x + 50, this.y + this.height - 15);
             context.restore();
     }
     lisener() {
@@ -298,9 +299,6 @@ export class BtnLanguage extends Btn {
             } else {
                 this.game.languageId++;
             }
-            
-            console.log(this.game.languageId);
-            
         }
         this.preset = false;
     }

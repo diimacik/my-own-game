@@ -132,13 +132,13 @@ export class Achiev {
             context.save();
             context.fillStyle = 'white'
             context.font = 30 + 'px ' + 'Pixelify Sans';
-            context.fillText('Staus, you have', this.windows.x + 180 , this.windows.y + 200);
+            context.fillText(this.game.languageSet[this.game.languageId].statusText[1], this.windows.x + 180 , this.windows.y + 200);
             context.restore();
         } else if (!this.game.AchScore[this.achieveInd]) {
             context.save();
             context.fillStyle = 'white'
             context.font = 30 + 'px ' + 'Pixelify Sans';
-            context.fillText("Staus, you don't have", this.windows.x + 180 , this.windows.y + 200);
+            context.fillText(this.game.languageSet[this.game.languageId].statusText[0], this.windows.x + 180 , this.windows.y + 200);
             context.restore();
         }
         
