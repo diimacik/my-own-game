@@ -72,8 +72,8 @@ class Btn {
             
         });
         addEventListener('touchstart', e => {
-            this.touchX = e.targetTouches[0].pageX;
-            this.touchY = e.targetTouches[0].pageY;
+            //this.touchX = e.targetTouches[0].pageX;
+            //this.touchY = e.targetTouches[0].pageY;
             if (document.fullscreenElement) {
                 this.touchX = e.targetTouches[0].pageX / this.game.userDev.indexX
                 this.touchY = e.targetTouches[0].pageY / this.game.userDev.indexY
