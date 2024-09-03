@@ -43,9 +43,9 @@ window.addEventListener('load', function() {
             this.joystick = new Joystick(this, this.width * 0.16, this.height * 0.6, 75, 25);
             this.btnPause = new btnPause(this, this.width * 0.9, this.height * 0.1)
             this.btn1 = [
-                new Btn1(this, this.width * 0.9 - 80, this.height * 0.3, 160, 50), 
-                new Btn2(this, this.width * 0.9 - 80, this.height * 0.5, 160, 50), 
-                new Btn3(this, this.width * 0.9 - 80, this.height * 0.7, 160, 50),
+                new Btn1(this, this.width - 170, this.height * 0.3, 160, 50), 
+                new Btn2(this, this.width - 170, this.height * 0.5, 160, 50), 
+                new Btn3(this, this.width - 170, this.height * 0.7, 160, 50),
             ]
             this.menu1 = new Menu1(this);
             this.achievBtn = [

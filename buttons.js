@@ -77,13 +77,19 @@ class Btn {
             if (document.fullscreenElement) {
                 this.touchX = e.targetTouches[0].pageX / this.game.userDev.indexX
                 this.touchY = e.targetTouches[0].pageY / this.game.userDev.indexY
-                //console.log(this.touchX, this.touchY);
+                
             }
-            else if (!document.fullscreenElement) {
+            else if (!document.fullscreenElement && this.game.userDev.screenHeight >= this.game.height) {
                 let rect = e.target.getBoundingClientRect();
                 this.touchX = e.targetTouches[0].pageX - rect.left;
                 this.touchY = e.targetTouches[0].pageY - rect.top;
             }
+            else if (!document.fullscreenElement && this.game.userDev.screenHeight <= this.game.height) {
+                this.touchX = e.targetTouches[0].pageX / this.game.userDev.indexX + (this.width / 2);
+                this.touchY = e.targetTouches[0].pageY / this.game.userDev.indexY;    
+            }
+            
+            
             if (this.touchX >= this.x && this.touchX <= this.x + this.width &&
                 this.touchY >= this.y && this.touchY <= this.y + this.height
             ){
