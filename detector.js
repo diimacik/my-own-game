@@ -15,8 +15,12 @@ export class UserDevice {
         this.screenHeight = screen.height;
         this.indexX = this.screenWidth / this.game.width;
         this.indexY = this.screenHeight / this.game.height;
+        this.lessScreen = (this.game.height - this.screenHeight) / this.indexX;
+        this.indexMin = this.lessScreen / this.game.width;
+
     }
     detector() {
+    
         if (this.device.windows) {
             this.leptop = true;
         }

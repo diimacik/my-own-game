@@ -74,7 +74,7 @@ class Btn {
         addEventListener('touchstart', e => {
             //this.touchX = e.targetTouches[0].pageX;
             //this.touchY = e.targetTouches[0].pageY;
-            if (document.fullscreenElement) {
+            if (document.fullscreenElement && this.game.userDev.screenHeight >= this.game.height) {
                 this.touchX = e.targetTouches[0].pageX / this.game.userDev.indexX
                 this.touchY = e.targetTouches[0].pageY / this.game.userDev.indexY
                 
@@ -85,11 +85,19 @@ class Btn {
                 this.touchY = e.targetTouches[0].pageY - rect.top;
             }
             else if (!document.fullscreenElement && this.game.userDev.screenHeight <= this.game.height) {
-                this.touchX = e.targetTouches[0].pageX / this.game.userDev.indexX + (this.width / 2);
-                this.touchY = e.targetTouches[0].pageY / this.game.userDev.indexY;    
+                let rect = e.target.getBoundingClientRect();
+                this.touchX = (e.targetTouches[0].pageX - rect.left) / (this.game.userDev.indexX - this.game.userDev.indexMin);
+                this.touchY = e.targetTouches[0].pageY / this.game.userDev.indexY;  
+                //console.log(this.touchX, this.game.userDev.indexX, this.game.userDev.indexMin);
+            }
+            else if (document.fullscreenElement && this.game.userDev.screenHeight <= this.game.height) {
+                
+                this.touchX = (e.targetTouches[0].pageX - this.game.userDev.lessScreen / 2) / (this.game.userDev.indexX - this.game.userDev.indexMin);
+                this.touchY = e.targetTouches[0].pageY / this.game.userDev.indexY;  
+                //console.log(this.touchX, this.game.userDev.indexX, this.game.userDev.indexMin);
             }
             
-            
+
             if (this.touchX >= this.x && this.touchX <= this.x + this.width &&
                 this.touchY >= this.y && this.touchY <= this.y + this.height
             ){
