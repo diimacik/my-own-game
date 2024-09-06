@@ -46,17 +46,29 @@ export class Joystick {
     }
     listener() {
         addEventListener('touchstart', e => {
-            const rect = e.target.getBoundingClientRect();
-            if (document.fullscreenElement) {
-                this.tX = e.touches[0].pageX / this.game.userDev.indexX;
-                this.tY = e.touches[0].pageY / this.game.userDev.indexY;
+            if (document.fullscreenElement && this.game.userDev.screenHeight >= this.game.height) {
+                this.tX = e.targetTouches[0].pageX / this.game.userDev.indexX
+                this.tY = e.targetTouches[0].pageY / this.game.userDev.indexY
+                
             }
-            else if (!document.fullscreenElement) {
+            else if (!document.fullscreenElement && this.game.userDev.screenHeight >= this.game.height) {
+                let rect = e.target.getBoundingClientRect();
+                this.tX = e.targetTouches[0].pageX - rect.left;
+                this.tY = e.targetTouches[0].pageY - rect.top;
+            }
+            else if (!document.fullscreenElement && this.game.userDev.screenHeight <= this.game.height) {
+                let rect = e.target.getBoundingClientRect();
+                this.tX = (e.targetTouches[0].pageX - rect.left) / (this.game.userDev.indexX - this.game.userDev.indexMin);
+                this.tY = e.targetTouches[0].pageY / this.game.userDev.indexY;  
+                //console.log(this.touchX, this.game.userDev.indexX, this.game.userDev.indexMin);
+            }
+            else if (document.fullscreenElement && this.game.userDev.screenHeight <= this.game.height) {
+                
+                this.tX = (e.targetTouches[0].pageX - this.game.userDev.lessScreen / 2) / (this.game.userDev.indexX - this.game.userDev.indexMin);
+                this.tY = e.targetTouches[0].pageY / this.game.userDev.indexY;  
+                //console.log(this.touchX, this.game.userDev.indexX, this.game.userDev.indexMin);
+            }
 
-                this.tX = e.touches[0].pageX - rect.left;
-                this.tY = e.touches[0].pageY - rect.top;
-            }
-            
             this.touchPos = new Vector2(this.tX, this.tY);
             if (this.touchPos.sub(this.origin).mag() <= this.radius) this.ondrag = true;
         })
