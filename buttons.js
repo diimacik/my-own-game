@@ -1,4 +1,4 @@
-export class btnPause {
+/*export class btnPause {
     constructor(game, x, y, color) {
         this.game = game;
         this.x = x;
@@ -26,7 +26,7 @@ export class btnPause {
         
         context.restore();
     }
-}
+}*/
 
 class Btn {
     constructor(x, y, width, heigth) {
@@ -105,11 +105,41 @@ class Btn {
                 this.preset = true;
                 this.game.music.pressBtnSound();
             }
+
             
-        })
+        });
         addEventListener('touchend', () => {
             this.preset = false;
         })
+    }
+}
+export class BtnPause extends Btn {
+    constructor(game, x, y, width, heigth) {
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = heigth;
+        this.color = 'rgba(0, 0, 0, 1)';
+        
+        this.text = false;
+    }
+    draw(context) {
+        super.draw(context);
+        context.save();
+        context.fillStyle = 'white';
+        context.font = 50 + 'px ' + 'Pixelify Sans';
+        context.fillText('||', this.x - 10 +  this.width / 2, this.y + this.height * 0.7);
+        context.restore();
+    }
+    lisener(){
+        super.lisener();
+        if (this.preset) {
+            this.game.setPause();
+            
+        }
+        this.preset = false;
     }
 }
 
@@ -134,6 +164,7 @@ export class Btn1 extends Btn {
             this.game.menu1.menuInd = 1;
             
         }
+        this.preset = false;
     }
 }
 export class Btn2 extends Btn {
@@ -157,6 +188,7 @@ export class Btn2 extends Btn {
             this.game.menu1.menuInd = 2;
             
         }
+        this.preset = false;
     }
 }
 export class Btn3 extends Btn {
@@ -173,6 +205,7 @@ export class Btn3 extends Btn {
     }
     draw(context) {
         super.draw(context);
+        
     }
     lisener(){
         super.lisener();
@@ -180,6 +213,7 @@ export class Btn3 extends Btn {
             this.game.menu1.menuInd = 3;
             
         }
+        this.preset = false;
     }
 
 }

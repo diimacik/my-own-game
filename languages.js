@@ -50,7 +50,7 @@ export class languageUa {
         this.image = document.getElementById('ukrainen');
         this.beforDelete = 'Ви впевнені, що видалите \n прогрес у цій грі?';
         this.btnText = [
-            'скини',
+            'скіни',
             'досягнення',
             'налаштування',
             'видалити все',

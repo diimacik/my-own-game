@@ -5,7 +5,7 @@ import { GroundEnemy, IceBoss, CoinBoss, Bird, IceLance} from "./enemies.js";
 import { UI } from "./UI.js"
 import { Cristal, Coins, Hearts } from "./things.js";
 import { Joystick } from "./joystick.js";
-import { btnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight, BtnSound, BtnLanguage, BtnScreen, BtnReset} from "./buttons.js";
+import { BtnPause, Btn1, Btn2, Btn3, BtnLeft, BtnRight, BtnSound, BtnLanguage, BtnScreen, BtnReset} from "./buttons.js";
 import { UserDevice } from "./detector.js";
 import { Menu1, Stack} from "./menu.js";
 import { Achiev } from "./achieves.js";
@@ -41,7 +41,7 @@ window.addEventListener('load', function() {
             this.input = new InputHandler(this);
             this.UI = new UI(this);
             this.joystick = new Joystick(this, this.width * 0.16, this.height * 0.6, 75, 25);
-            this.btnPause = new btnPause(this, this.width * 0.9, this.height * 0.1)
+            this.btnPause = new BtnPause(this, this.width  - 150, this.height * 0.05, 100, 75)
             this.btn1 = [
                 new Btn1(this, this.width - 170, this.height * 0.3, 160, 50), 
                 new Btn2(this, this.width - 170, this.height * 0.5, 160, 50), 
@@ -113,6 +113,7 @@ window.addEventListener('load', function() {
         
         update(deltaTime) {
             this.music.update();
+            
             if (this.score === undefined) {
                 this.score = {
                     coins:0,
@@ -141,12 +142,14 @@ window.addEventListener('load', function() {
             if (this.languageId === undefined) {
                 this.languageId = 0;
             }
+            this.btnPause.lisener();
             if (!this.gamePuase) {
                 //this.music.play = true;
                 
                 this.background.update(deltaTime);
                 this.player.update(this.input.keys, this.joystick.keys, deltaTime, this.enemies, this.things);
                 this.joystick.update(deltaTime);
+
                 this.joystick.listener();
                 // handle enemies
                 if (this.enemyTimer > this.enemyInterval && !this.gamePuase) {

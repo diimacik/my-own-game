@@ -36,8 +36,8 @@ export class InputHandler {
 
         // touch listener for restart game :)
         window.addEventListener('touchstart', e => {
-            this.touchX = e.changedTouches[0].pageX / this.game.userDev.indexX + this.game.btnPause.radius;
-            this.touchY = e.changedTouches[0].pageY / this.game.userDev.indexY + this.game.btnPause.radius;
+            this.touchX = e.changedTouches[0].pageX / this.game.userDev.indexX;
+            this.touchY = e.changedTouches[0].pageY / this.game.userDev.indexY;
             /*
             const btnX = this.game.btnPause.x;
             const btnY = this.game.btnPause.y;
@@ -66,6 +66,7 @@ export class InputHandler {
             
             */
         });
+        /*
         window.addEventListener('mousedown', e => {
             this.game.userDev.detector();
             this.touchY = e.offsetY;
@@ -76,7 +77,7 @@ export class InputHandler {
 
             };
             // pause touch in button
-            
+            /*
             const btnX = this.game.btnPause.x - 30;
             const btnY = this.game.btnPause.y - 30;
             const radius = this.game.btnPause.radius;
@@ -90,6 +91,6 @@ export class InputHandler {
                 this.game.setPause();
             }
                 
-        });
+        });*/
     }
 }
